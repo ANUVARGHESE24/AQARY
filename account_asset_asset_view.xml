@@ -1,0 +1,2543 @@
+<odoo>
+    <data>
+        <record id="property_management.property_asset_kanban_view" model="ir.ui.view">
+            <field name="name">Property Asset Kanban</field>
+            <field name="model">account.asset.asset</field>
+            <field name="arch" type="xml">
+                <kanban create="0" class="view_kanban_unit">
+                    <field name="id"/>
+                    <field name="state"/>
+                    <field name="color"/>
+                    <field name="name"/>
+                    <field name="type_id"/>
+                    <field name="parent_id"/>
+                    <field name="builtup_area"/>
+                    <field name="bedroom_id"/>
+                    <field name="furnished"/>
+                    <field name="marketing_image"/>
+                    <field name="marketing_desc"/>
+                    <field name="marketing_title"/>
+                    <field name="has_image"/>
+                    <field name="from_sale"/>
+                    <field name="country_id"/>
+                    <field name="state_id"/>
+                    <field name="city_id"/>
+                    <field name="street_id"/>
+                    <field name="street"/>
+                    <field name="selling_price"/>
+                    <field name="floor_number"/>
+                    <field name="handover_date"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_res_partner_kanban">
+                                <div class="unit_kaban_row">
+                                    <div class="col-xs-6">
+                                        <strong class="oe_partner_heading">
+                                            <field name="display_name"/>
+                                        </strong>
+                                    </div>
+                                    <div class="col-xs-6 text-right">
+                                        <b>Ref No:</b>
+                                        <field name="code"/>
+                                    </div>
+                                </div>
+
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)}"
+                                                 style="width:100%;">
+                                                <a type="open">
+                                                    <t t-if="record.marketing_image.raw_value">
+                                                        <div class="o_kanban_image unit_img_kanban"
+                                                             style="max-width: none !important;width: 80% !important;">
+                                                            <img alt="Logo"
+                                                                 t-att-src="kanban_image('account.asset.asset', 'marketing_image', record.id.raw_value)"/>
+                                                        </div>
+                                                    </t>
+                                                    <t t-if="!record.marketing_image.raw_value">
+                                                        <img alt="Logo" style="padding: 5px;"
+                                                             t-att-src='_s + "/base/static/img/company_image.png"' />
+                                                    </t>
+                                                </a>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-xs-6" style="padding: 5px;">
+                                                    <ul>
+                                                        <li>
+                                                            <b>Type:</b>
+                                                            <t t-if="record.type_id.raw_value">
+                                                                <field name="type_id"/>
+                                                            </t>
+                                                        </li>
+                                                        <li>
+                                                            <b>Area:</b>
+                                                            <t t-if="record.builtup_area.raw_value">
+                                                                <field name="builtup_area"/>
+                                                            </t>
+
+                                                        </li>
+                                                        <li>
+                                                            <b>Bedroom:</b>
+                                                            <t t-if="record.bedroom_id.raw_value">
+                                                                <field name="bedroom_id"/>
+                                                            </t>
+
+                                                        </li>
+                                                        <li>
+                                                            <b>View:</b>
+                                                            <t t-if="record.primary_view_id.raw_value">
+                                                                <field name="primary_view_id"/>
+                                                            </t>
+
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <ul>
+                                                        <li>
+                                                            <b>Floor:</b>
+                                                            <t t-if="record.floor_number.raw_value">
+                                                                <field name="floor_number"/>
+                                                            </t>
+
+                                                        </li>
+                                                        <li>
+                                                            <b>Price:</b>AED
+                                                            <t t-if="record.selling_price.raw_value">
+                                                                <field name="selling_price"/>
+                                                            </t>
+
+                                                        </li>
+                                                        <li>
+                                                            <b>Handover Date:</b>
+                                                            <t t-if="record.handover_date.raw_value">
+                                                                <field name="handover_date"/>
+                                                            </t>
+
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <div class="o_dropdown_kanban dropdown" groups="base.group_user">
+                                    <label for="" class="link_k">
+                                        <button type="object" name="open_property_form_view">Open unit</button>
+                                    </label>
+                                </div>
+                            </div>
+                        </t>
+                        <!-- <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)}"
+                                 style="width:100%;">
+                                Main Div
+                                <div style="-ms-flex: none !important;
+                                            -moz-flex: none !important;
+                                            -webkit-box-flex: none !important;
+                                            -webkit-flex: none !important;
+                                            flex: none !important;">
+                                    <a type="open">
+                                                                               <t t-if="record.marketing_image.raw_value">
+                                        <div class="o_kanban_image"
+                                             style="max-width: none !important;width: 300px !important;">
+                                            <img t-att-src="kanban_image('account.asset.asset', 'marketing_image', record.id.raw_value)"/>
+                                        </div>
+                                                                               </t>
+                                                                               <t t-if="!record.marketing_image.raw_value">
+                                                                                   <div class="o_kanban_image">
+                                                                                       <img t-att-src='_s + "/base/static/src/img/company_image.png"'
+                                                                                            style="width:100% !important;height:150% !important;"/>
+                                                                                   </div>
+                                                                               </t>
+                                    </a>
+                                </div>
+                                <div style="float:left; width:70%;">
+                                    <div
+                                            t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_vignette oe_semantic_html_override oe_kanban_project oe_kanban_global_click">
+                                        <table width="100%">
+                                            <tr>
+
+                                                <td width="97%">
+                                                    <div class="oe_kanban_details">
+                                                        <div>
+                                                            <h4 class="oe_partner_heading">
+                                                                <div style="display:inline-block">
+                                                                    <a style="color:black" type="open">
+                                                                        <field name="name"/>
+                                                                    </a>
+                                                                </div>
+                                                                <div style="display:inline-block;float:right">
+                                                                    <a type="open">
+                                                                        AED<field name="selling_price"/>
+                                                                    </a>
+                                                                </div>
+                                                            </h4>
+                                                        </div>
+                                                        <div>
+                                                            <h3 class="oe_partner_heading">
+                                                                <a>
+                                                                    <field name="marketing_title"/>
+                                                                </a>
+                                                            </h3>
+                                                        </div>
+                                                        <ul>
+                                                            <li style="font-size:10pt;color:blue"
+                                                                t-if="record.type_id.raw_value ">
+                                                                <b>
+                                                                    <field name="type_id"/>
+                                                                </b>
+                                                                for
+                                                                <t t-if="record.from_sale.raw_value">
+                                                                    <b>Sale</b>
+                                                                </t>
+                                                                <t t-if="!record.from_sale.raw_value">
+                                                                    <b>Rent</b>
+                                                                </t>
+                                                            </li>
+                                                            <li t-if="record.furnished.raw_value">
+                                                                <b>Furnishing :</b>
+                                                                <field name="furnished"/>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                                <td width="3%">
+                                                    <div class="o_dropdown_kanban dropdown" groups="base.group_user">
+                                                        <a class="dropdown-toggle btn" data-toggle="dropdown"
+                                                           href="#">
+                                                            <span class="fa fa-bars fa-lg"/>
+                                                        </a>
+                                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                                            <t t-if="widget.editable">
+                                                                <li>
+                                                                    <a type="edit">Edit</a>
+                                                                </li>
+                                                            </t>
+                                                            <t t-if="widget.deletable">
+                                                                <li>
+                                                                    <a type="delete">Delete</a>
+                                                                </li>
+                                                            </t>
+                                                            <li>
+                                                                <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <ul>
+                                                        <li style="margin-top:1px;">
+                                                            <b>Address :</b>
+                                                        </li>
+                                                        <li>
+                                                            <img src="https://img.icons8.com/material-rounded/20/000000/marker.png"></img>
+                                                            <t t-if="record.street.raw_value">
+                                                                <field name="street"/>,
+                                                            </t>
+                                                            <t t-if="record.city.raw_value">
+                                                                <field name="city"/>
+                                                                ,
+                                                            </t>
+                                                            <t t-if="record.state_id.raw_value">
+                                                                <field name="state_id"/>
+                                                                ,
+                                                            </t>
+                                                            <field name="country_id"/>
+                                                        </li>
+                                                        <li
+                                                                t-if="record.state_id.raw_value and record.city.raw_value and record.country_id.raw_value">
+                                                            <field name="city"/>
+                                                            ,
+                                                            <field name="state_id"/>
+                                                            ,
+                                                            <field name="country_id"/>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <ul>
+                                                        <li t-if="record.marketing_desc.raw_value ">
+                                                            <field name="marketing_desc"/>
+
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <ul>
+                                                        <li>
+                                                            <div style="display:inline-block;float:left">
+                                                                 <li t-if="record.marketing_desc.raw_value ">
+                                                                kjjgfyy
+
+                                                            </div>
+                                                            <div style="display:inline-block;float:right">
+                                                                 <li t-if="record.marketing_desc.raw_value ">
+                                                                <field name="owner_id"/>
+                                                                on
+                                                                <field name="create_date"/>
+                                                            </div>
+
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </t> -->
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="property_view_tree_advanced" model="ir.ui.view">
+            <field name="name">property.view.asset.tree</field>
+            <field name="model">account.asset.asset</field>
+            <field name="arch" type="xml">
+                <tree string="Properties">
+                    <!--decoration-muted="state=='make_draft'"-->
+                    <!--decoration-primary="state=='book'" decoration-danger="state=='normal'"-->
+                    <!--decoration-success="state=='draft'" decoration-info="state=='block'"-->
+                    <!--default_order="write_date desc">-->
+                    <field name="from_sale" invisible="1"/>
+                    <field name="write_date"/>
+                    <field name="code"/>
+                    <field name="property_community_id"/>
+                    <field name="property_master_id"/>
+                    <field name="unit_type"/>
+                    <field name="name" string="Unit No."/>
+                    <field name="unit_model" string="Model"/>
+                    <field name="can_view"/>
+                    <field name="builtup_area"/>
+                    <field name="selling_price"/>
+                    <field name="listing_agent_id"/>
+                    <field name="bedroom_id"/>
+                    <field name="permit_number"/>
+                    <field name="owner_id" string="Seller Name"/>
+                    <field name="owner_phone" string="Seller Phone"/>
+                    <field name="owner_ref" string="Seller Ref"/>
+                    <!--                    <Rfield name="upcoming" attrs="{'invisible':[('from_sale','=',True)]}"/>-->
+                    <!--                    <field name="vacating_date" attrs="{'invisible':[('from_sale','=',True)]}"/>-->
+                    <!--<field name="all_agent_remarks"/>-->
+                    <!--<field name="listing_agent_remarks"/>-->
+                    <field name="no_of_images"/>
+                    <field name="state" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="account_asset_upcoming_renewals_leasing_tree_view" model="ir.ui.view">
+            <field name="name">account.asset.asset.tree</field>
+            <field name="model">account.asset.asset</field>
+            <field name="arch" type="xml">
+                <tree default_order="write_date desc">
+                    <field name="write_date"/>
+                    <field name="bedroom_id"/>
+                    <field name="no_of_cheques"/>
+                    <field name="city"/>
+                    <field name="property_community_id"/>
+                    <field name="contract_end_date" string="Contract Rent End"/>
+                    <field name="contract_start_date" string="Original Start Date"/>
+                    <field name="original_price_per_sq_ft"/>
+                    <field name="property_master_id"/>
+                    <field name="rent_per_month"/>
+                    <field name="property_sub_community_id"/>
+                    <field name="current_tenant_id" string="Tenant Name"/>
+                    <field name="unit_number"/>
+                    <field name="name" string="Unit No."/>
+                    <field name="ref_no"/>
+                    <field name="unit_type"/>
+                    <field name="district_id"/>
+                    <field name="street_id"/>
+                    <field name="street" string="Location"/>
+                    <field name="state" invisible="1"/>
+                    <field name="from_sale" invisible="1"/>
+                    <field name="contract_rent"/>
+                    <field name="new_rent"/>
+                    <field name="notie_sent_one"/>
+                    <field name="notice_sent"/>
+                    <field name="notice_sent_by"/>
+                    <field name="notice_updated"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="property_view_asset_tree_inherit_bi" model="ir.ui.view">
+            <field name="name">property.view.asset.sale.tree</field>
+            <field name="model">account.asset.asset</field>
+            <field name="inherit_id" ref="property_management.property_view_asset_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="replace">
+                    <tree string="Properties"
+                         decoration-danger="state=='normal'"
+                          decoration-success="state=='draft'"
+                          decoration-info="state=='block'" >
+                        <button name="action_view_record"
+                                type="object"
+                                icon="fa-eye"
+                                string="open"
+                                class="custom_identifier"/>
+                        <field name="from_sale" invisible="1" optional="hide"/>
+                        <field name="write_date" string="Last Updated" class="default_show" optional="show"/>
+                        <field name="code" string="Ref. No" class="default_show" optional="show"/>
+                        <field name="external_ref_no" string="External Ref. No!!!!" class="default_show" optional="hide"/>
+                        <field name="property_master_id" class="default_show" optional="show"/>
+                        <field name="property_community_id" string="Community..!!.." class="default_show" optional="show"/>
+                        <field name="property_sub_community_id" string="Sub Community" class="default_show Property" optional="show"/>
+                        <field name="property_subtype_id" class="Unit" optional="hide"/>
+                        <field name="type_id" string="Unit Type" class="default_show" optional="show"/>
+                        <field name="bedroom_id" class="default_show Unit" string="Bedrooms" optional="show"/>
+                        <field name="name" string="Unit No." class="default_show" optional="show"/>
+                        <field name="unit_model" string="Model" class="default_show" optional="show"/>
+                        <field name="primary_view_id" string="View" class="default_show" optional="show"/>
+                        <field name="builtup_area" type="char" optional="show"/>
+                        <field name="selling_price" widget="monetary" optional="show"/>
+                        <field name="listing_agent_id" class="default_show" optional="show"/>
+                        <field name="enteredby" class="default_show Unit" optional="show"/>
+                         <field name="entered_date" class="default_show Unit" optional="show"/>
+                        <field name="assigned_to" string="Assigned to" class="default_show Unit" invisible="1" optional="show"/>
+                        <!--<field name="assigned_to_ids" widget="many2many_tags" string="Assigned to" class="default_show Unit"/>-->
+                        <field name="owner_id" string="Seller Name" class="default_show Contact" optional="show"/>
+                        <field name="owner_phone" string="Seller Phone" class="default_show Contact" optional="show"/>
+                        <field name="ads_date" string="Ads Date" class="Unit" optional="hide"/>
+                        <field name="agency_fee_seller" class="Unit" optional="hide"/>
+                        <field name="agency_fee_buyer" class="Unit" optional="hide"/>
+                        <field name="agent_alias" class="Unit" optional="hide"/>
+                        <field name="agent_email" class="Unit" optional="hide"/>
+                        <field name="agent_phone" class="Unit" optional="hide"/>
+                        <field name="amount_paid_to_developer" class="Unit" optional="hide"/>
+                        <field name="amount_due_to_developer" class="Unit" optional="hide"/>
+                        <field name="unit_expiry_data" class="Unit" optional="hide"/>
+                        <field name="unit_unpublished_date" class="Unit" optional="hide"/>
+                        <field name="district_id" string="District" class="Unit" optional="hide"/>
+                        <field name="street" string="Location" class="Unit" optional="hide"/>
+
+                        <field name="aspect" class="Unit" optional="hide"/>
+                        <field name="base_price" class="Unit" optional="hide"/>
+                        <field name="bathroom" class="Unit" optional="hide"/>
+                        <field name="bdm_services" class="Unit" optional="hide"/>
+                        <field name="bedroom_id" class="default_show Unit" optional="hide"/>
+                        <field name="blocked_date" class="Unit" optional="hide"/>
+                        <!--<field name="blocked_notes" class="Unit"/>-->
+
+                        <field name="new_address" string="Buyer Address" class="Contact" optional="hide"/>
+                        <field name="city" string="Buyer City" class="Contact" optional="hide"/>
+                        <field name="buyer_date_of_birth" class="Contact" optional="hide"/>
+                        <field name="buyer_email" class="Contact" optional="hide"/>
+                        <field name="buyer_enteredby" class="Contact" optional="hide"/>
+                        <field name="buyer_family_name" class="Contact" optional="hide"/>
+                        <field name="buyer_full_name" class="Contact" optional="hide"/>
+                        <field name="buyer_name" class="Contact" optional="hide"/>
+                        <field name="buyer_nationality" class="Contact" optional="hide"/>
+                        <field name="buyer_passport" class="Contact" optional="hide"/>
+                        <field name="buyer_phone" class="Contact" optional="hide"/>
+                        <field name="b_pobox" class="Contact" optional="hide"/>
+                        <field name="buyer_ref" class="Contact" optional="hide"/>
+                        <field name="buyer_residency" class="Contact" optional="hide"/>
+                        <field name="buyer_saluation" class="Contact" optional="hide"/>
+                        <!---->
+                        <!--CHECK CLASSL-->
+                        <field name="buyer_total" invisible="1" optional="hide"/>
+                        <field name="capacity" class="Unit" optional="hide"/>
+                        <field name="closed_date" string="Closing Date" class="Transaction" optional="hide"/>
+                        <field name="completion_date" string="Completion Date" class="Property" optional="hide"/>
+                        <field name="contract_ref_no" class="Transaction" optional="hide"/>
+                        <field name="currency" class="Unit" optional="hide"/>
+
+                        <field name="deed_transfer_date" class="Transaction" optional="hide"/>
+                        <field name="developer" invisible="1" optional="hide"/>
+                        <field name="dining_room" class="Unit" optional="hide"/>
+                        <field name="discount" class="Unit" optional="hide"/>
+                        <field name="street" class="Unit" optional="hide"/>
+
+                        <field name="enteredby" class="Unit" optional="hide"/>
+                        <field name="entered_on" class="Unit" optional="hide"/>
+                        <field name="expries_on" class="Unit" optional="hide"/>
+                        <field name="is_external_agent" class="Transaction" optional="hide"/>
+                        <field name="external_company" class="Transaction" optional="hide"/>
+                        <field name="financing" class="Unit" optional="hide"/>
+
+                        <field name="floor_number" class="Unit" optional="hide"/>
+                        <field name="free_parking_space" class="Unit" optional="hide"/>
+                        <field name="furnished" class="Unit" optional="hide"/>
+                        <field name="grosse_leasable_area" class="Unit" optional="hide"/>
+                        <field name="handover_date" class="Unit" optional="hide"/>
+                        <field name="internal" class="Unit" string="Internal Area" optional="hide"/>
+                        <field name="internal_referral_seller_id" class="Unit" string="Internal Referral" optional="hide"/>
+                        <field name="internal_referral_commission" class="Unit" string="Internal Referral Commission" optional="hide"/>
+                        <field name="key_status" class="Unit" optional="hide"/>
+                        <field name="kitchen_details" class="Unit" optional="hide"/>
+                        <field name="last_transaction" class="Unit" optional="hide"/>
+                        <field name="listing_agent_branch_name" class="Unit" optional="hide"/>
+                        <!--                    <field name="listing_agent_id" class="Unit"/>-->
+                        <field name="listing_date" class="Unit" optional="hide"/>
+                        <field name="listing_type" class="Unit" optional="hide"/>
+                        <field name="loc_desc" class="Property" optional="hide"/>
+                        <field name="maintanence_fee_amount" class="Unit" optional="hide"/>
+                        <field name="mandate" class="Unit" optional="hide"/>
+                        <!--<field name="marketing_agent_ids" class="Unit"/>-->
+                        <field name="marketing_agent_branch_id" class="Unit" optional="hide"/>
+                        <!--<field name="marketing_desc" class="Unit"/>-->
+                        <field name="marketing_title" class="Unit" optional="hide"/>
+                        <field name="mortgage" class="Unit" optional="hide"/>
+                        <field name="net_area" class="Unit" optional="hide"/>
+                        <field name="new_address" class="Unit" optional="hide"/>
+                        <field name="no_of_image" class="Unit" optional="hide"/>
+                        <field name="no_of_invoice" class="Unit" optional="hide"/>
+                        <field name="no_of_rooms" class="Unit" optional="hide"/>
+                        <field name="off_plan_property" class="Property" optional="hide"/>
+                        <field name="other_area" class="Unit" optional="hide"/>
+                        <field name="owner_occupied" class="Unit" optional="hide"/>
+                        <field name="paid_parking_spaces" class="Unit" optional="hide"/>
+                        <field name="parking_number" class="Unit" optional="hide"/>
+                        <field name="payment_plan" class="Unit" optional="hide"/>
+                        <field name="percentage_paid" class="Unit" optional="hide"/>
+                        <field name="plot_area" class="Unit" optional="hide"/>
+                        <field name="plot_number" class="Unit" optional="hide"/>
+                        <field name="premium" class="Unit" optional="hide"/>
+                        <field name="price_on_application" class="Unit" optional="hide"/>
+                        <field name="price_per_sqt_foot" class="Unit" optional="hide"/>
+                        <!--                    <field name="primary_view_id" class="Unit"/>-->
+
+                        <field name="property_code" class="Property" optional="hide"/>
+                        <field name="published_by" class="Unit" optional="hide"/>
+                        <field name="published_date" class="Unit" optional="hide"/>
+                        <field name="reason_for_cancel" class="Unit" optional="hide"/>
+                        <field name="recreation_room" class="Unit" optional="hide"/>
+                        <field name="rent_type_id" class="Unit" optional="hide"/>
+                        <field name="rera_str" class="Unit" optional="hide"/>
+                        <field name="reservation_date" class="Transaction" optional="hide"/>
+                        <field name="reservation_type" class="Unit" optional="hide"/>
+                        <field name="reserved_since" class="Transaction" optional="hide"/>
+                        <field name="roof_type" class="Unit" optional="hide"/>
+                        <field name="secondary_view_id" class="Unit" optional="hide"/>
+                        <field name="seller_address" class="Contact" optional="hide"/>
+                        <field name="seller_date_of_birth" class="Contact" optional="hide"/>
+                        <field name="seller_email" class="Contact" optional="hide"/>
+                        <field name="owner_family_name" string="Seller Family Name" class="Contact" optional="hide"/>
+                        <field name="owner_first_name" string="Seller Full Name" class="Contact" optional="hide"/>
+                        <field name="owner_id" string="Seller Name" class="Contact" optional="hide"/>
+                        <field name="owner_phone" string="Seller Phone" class="Contact" optional="hide"/>
+                        <field name="owner_ref" string="Seller Ref" class="Contact" optional="hide"/>
+                        <field name="seller_paid_amount_s" class="Contact" optional="hide"/>
+                        <field name="seller_nationality" class="Contact" optional="hide"/>
+                        <field name="seller_residency" class="Contact" optional="hide"/>
+                        <field name="seller_saluation" class="Contact" optional="hide"/>
+
+                        <field name="send_for_approval" class="Unit" optional="hide"/>
+                        <field name="service_area" class="Unit" optional="hide"/>
+                        <field name="sold_by_third_party" class="Unit" optional="hide"/>
+                        <field name="sold_date" class="Transaction" optional="hide"/>
+                        <field name="state" string="State" class="Unit" optional="hide"/>
+                        <field name="state_id" string="Status" class="Unit" optional="hide"/>
+                        <field name="lease_status" class="Unit" optional="hide"/>
+
+                        <field name="title_deed_no" class="Transaction" optional="hide" />
+                        <field name="title_deed_issued" string="Title deed transferred" class="Unit" optional="hide"/>
+                        <field name="to_seller" string="To Seller" class="Unit" optional="hide"/>
+                        <field name="transcation_agent_id" class="Transaction" optional="hide"/>
+                        <field name="trx_id" class="Transaction" optional="hide"/>
+                        <field name="transaction_no" class="Unit" optional="hide"/>
+                        <!---->
+                        <!---->
+                        <field name="transfer_fee_seller_percent" class="Unit" optional="hide"/>
+                        <field name="transfer_fee_buyer_percent" class="Unit" optional="hide"/>
+                        <field name="title_type" class="Unit" optional="hide"/>
+                        <field name="unit_unpublished_date" class="Unit" optional="hide"/>
+                        <field name="unpublished_by" class="Unit" optional="hide"/>
+                        <field name="usp" class="Unit" optional="hide"/>
+                        <field name="can_view" string="Viewable" class="Unit" optional="hide"/>
+                        <field name="villa_type" class="Unit" optional="hide"/>
+                        <field name="watchman_room" class="Unit" optional="hide"/>
+                        <field name="water_tank_cpty" class="Unit" optional="hide"/>
+                        <field name="web_remark" class="Unit" optional="hide"/>
+                        <field name="construction_cost" string="yr.Construction" class="Property" optional="hide"/>
+
+
+                        <field name="car_park_allowed" class="Unit" optional="hide"/>
+                        <field name="country_id" class="Unit" optional="hide"/>
+
+
+                        <field name="buyer_total_amount" class="Unit" optional="hide"/>
+                        <field name="bed_capacity" class="Unit" optional="hide"/>
+
+
+                        <!-- Tree header --><!-- Default values -->
+                        <!--<field name="write_date" string="Last Updated" class="default_show Contact"/>-->
+                        <!--                    <field name="property_subtype_id" string="Subtype" class="Contact"/>-->
+                        <field name="property_subtype_id" class="default_show Unit" optional="hide"/>
+                        <!--                    <field name="property_sub_community_id" string="Sub Community" class="default_show"/>-->
+                        <field name="annual_year" string="Rent Year" class="default_show" optional="hide"/>
+                        <field name="listing_agent_id" class="default_show" optional="hide"/>
+                        <field name="no_of_images" type="char" optional="hide"/>
+                        <field name="state" invisible="1" class="zz" optional="hide"/>
+                        <field name="create_date" class="zz" string="Entered On" invisible="1" optional="hide"/>
+                        <field name="city_id" invisible="1" optional="hide"/>
+                        <field name="state_id" invisible="1" optional="hide"/>
+                        <field name="state" invisible="1" optional="hide"/>
+                        <field name="country_id" invisible="1" optional="hide"/>
+                    </tree>
+                </xpath>
+            </field>
+        </record>
+
+
+
+        <record model="ir.ui.view" id="view_account_asset_asset_form_dc">
+            <field name="name">account.asset.asset.dc</field>
+            <field name="model">account.asset.asset</field>
+            <field name="inherit_id" ref="base_accounting_kit.view_account_asset_asset_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="share" class="oe_stat_button" type="object" string="Share"
+                            style="background-color: #e49314;border-color: #e49314;"
+                            icon="fa-share"/>
+                    <button class="oe_highlight"
+                            style="background-color:listing_user_id #82a8bf;border-color: #82a8bf;"
+                            name="action_create_lease_contract" string="New Lease Contract"
+                            attrs="{'invisible': [('from_sale', '=', True)]}"
+                            type="object"/>
+                    <button class="oe_highlight"
+                            style="background-color: #82a8bf;border-color: #82a8bf;"
+                            name="action_create_sale_contract" string="New Sale Contract"
+                            attrs="{'invisible': [('from_sale', '=', False)]}"
+                            type="object"/>
+                    <!--                    <field name="state" widget="statusbar"-->
+                    <!--                           statusbar_visible="make_draft,draft,book,normal,sold,cancel,block,upcoming"-->
+                    <!--                           options="{'clickable': '1', 'fold_field': 'fold','select':'1'}"/>-->
+
+
+                </xpath>
+                <xpath expr="//sheet/div[@name='button_box']" position="before">
+                    <group attrs="{'invisible':[('state','not in',['sent_to_approval','draft_approval'])]}">
+                        <div class="text-right">
+                            <button string="Sent to Approval" statelevel="sent_to_approval" disabled="1"
+                                    class="sent_approval-color"
+                                    attrs="{'invisible':[('state','not in',['sent_to_approval'])]}"
+                            />
+                            <button string="To Approve" statelevel="approve" class="approve-color" type="object"
+                                    name="action_approve"
+                                    groups="finehome_user.group_super_admin"
+                                    attrs="{'invisible':[('state','not in',['sent_to_approval'])]}"
+                            />
+                            <button string="Approved" statelevel="approve" class="approve-color"
+                                    attrs="{'invisible':[('state','not in',['approve'])]}"
+                            />
+                            <button string="Submit Approval" statelevel="draft_approval" class="draft_approval-color"
+                                    name="action_submit_approval"
+                                    attrs="{'invisible':[('state','not in',['draft_approval'])]}"
+                                    type="object"/>
+                            <button string="Available" statelevel="draft" class="draft-color" name="action_draft"
+                                    disabled="1" type="object"/>
+                            <button string="Reserve" disabled="1"
+                                    statelevel="book" class="book-color" name="action_book" type="object"/>
+                            <button string="On Lease" statelevel="normal" class="lease-color" name="action_normal"
+                                    disabled="1" type="object"/>
+                            <!--<button string="Sale"-->
+                            <!--disabled="1" statelevel="close" class="sale-color" name="action_close"-->
+                            <!--type="object"/>-->
+                            <button string="Sold" disabled="1" statelevel="sold" class="sold-color" name="action_sold"
+                                    type="object"/>
+                            <button string="Cancel" statelevel="cancel" class="cancel-color" name="action_cancel"
+                                    disabled="1" type="object"/>
+                            <button string="Block" statelevel="block" class="block-color" name="action_block"
+                                    disabled="1" type="object"/>
+                            <button string="Upcoming" statelevel="upcoming" class="upcoming-color"
+                                    name="action_upcoming"
+                                    disabled="1" type="object"/>
+                            <br/>
+                        </div>
+                    </group>
+                    <group attrs="{'invisible':[('state','not in',['draft'])]}">
+                        <!--                        <div class="o_form_statusbar">-->
+                        <div class="text-right">
+                            <button string="Make Draft" statelevel="make_draft" class="make_draft-color"
+                                    name="action_make_draft"
+                                    type="object"/>
+                            <button string="Available" statelevel="draft" class=" filldraft-color draft-color"
+                                    name="action_draft"
+                                    type="object"/>
+                            <button string="Reserve" statelevel="book" class="book-color" name="action_book"
+                                    type="object"/>
+                            <button string="On Lease" statelevel="normal" class="lease-color" name="action_normal"
+                                    type="object"/>
+                            <!--<button string="Sale" statelevel="close" class="sale-color" name="action_close"-->
+                            <!--type="object"/>-->
+                            <button string="Sold" statelevel="sold" class="sold-color" name="action_sold"
+                                    type="object"/>
+                            <button string="Cancel" statelevel="cancel" class="cancel-color" name="action_cancel"
+                                    type="object"/>
+                            <button string="Block" statelevel="block" class="block-color" name="action_block"
+                                    type="object"/>
+                            <button string="Upcoming" statelevel="upcoming" class="upcoming-color"
+                                    name="action_upcoming"
+                                    type="object"/>
+                        </div>
+
+                    </group>
+
+                    <group attrs="{'invisible':[('state','not in',['make_draft'])]}">
+                        <!--                        <div class="o_form_statusbar">-->
+                        <div class="text-right">
+                            <button string="Make Draft" statelevel="make_draft" class="filldraft-color make_draft-color"
+                                    name="action_make_draft"
+                                    type="object"/>
+                            <button string="Available" statelevel="draft" class="draft-color"
+                                    name="action_draft"
+                                    type="object"/>
+                            <button string="Reserve" statelevel="book" class="book-color" name="action_book"
+                                    type="object"/>
+                            <button string="On Lease" statelevel="normal" class="lease-color" name="action_normal"
+                                    type="object"/>
+                            <!--<button string="Sale" statelevel="close" class="sale-color" name="action_close"-->
+                            <!--type="object"/>-->
+                            <button string="Sold" statelevel="sold" class="sold-color" name="action_sold"
+                                    type="object"/>
+                            <button string="Cancel" statelevel="cancel" class="cancel-color" name="action_cancel"
+                                    type="object"/>
+                            <button string="Block" statelevel="block" class="block-color" name="action_block"
+                                    type="object"/>
+                            <button string="Upcoming" statelevel="upcoming" class="upcoming-color"
+                                    name="action_upcoming"
+                                    type="object"/>
+                        </div>
+                    </group>
+
+                    <group attrs="{'invisible':[('state','not in',['approve'])]}">
+                        <div class="text-right">
+                            <button string="Make Draft" statelevel="make_draft" class="make_draft-color"
+                                    name="action_make_draft"
+                                    type="object"
+                            />
+                            <button string="Approved" statelevel="draft" class=" fillapproved-color draft-color"
+                                    type="object"/>
+                            <button string="Available" statelevel="draft" class=" filldraft-color draft-color"
+                                    name="action_draft"
+                                    type="object"/>
+                            <button string="Reserve" statelevel="book" class="book-color" name="action_book"
+                                    type="object"/>
+                            <button string="On Lease" statelevel="normal" class="lease-color" name="action_normal"
+                                    type="object"/>
+                            <!--<button string="Sale" statelevel="close" class="sale-color" name="action_close"-->
+                            <!--type="object"/>-->
+                            <button string="Sold" statelevel="sold" class="sold-color" name="action_sold"
+                                    type="object"/>
+                            <button string="Cancel" statelevel="cancel" class="cancel-color" name="action_cancel"
+                                    type="object"/>
+                            <button string="Block" statelevel="block" class="block-color" name="action_block"
+                                    type="object"/>
+                            <button string="Upcoming" statelevel="upcoming" class="upcoming-color"
+                                    name="action_upcoming"
+                                    type="object"/>
+                        </div>
+
+                    </group>
+
+                    <group attrs="{'invisible':[('state','not in',['book'])]}">
+                        <div class="text-right">
+                            <button string="Make Draft" statelevel="make_draft" class="make_draft-color"
+                                    name="action_make_draft"
+                                    type="object"
+                            />
+
+                            <button string="Available" statelevel="draft" class=" draft-color" name="action_draft"
+                                    type="object"/>
+                            <button string="Reserve" statelevel="book" class="fillbook-color book-color"
+                                    name="action_book" type="object"/>
+                            <button string="On Lease" statelevel="normal" class="lease-color" name="action_normal"
+                                    type="object"/>
+                            <!--<button string="Sale" statelevel="close" class="sale-color" name="action_close"-->
+                            <!--type="object"/>-->
+                            <button string="Sold" statelevel="sold" class="sold-color" name="action_sold"
+                                    type="object"/>
+                            <button string="Cancel" statelevel="cancel" class="cancel-color" name="action_cancel"
+                                    type="object"/>
+                            <button string="Block" statelevel="block" class="block-color" name="action_block"
+                                    type="object"/>
+                            <button string="Upcoming" statelevel="upcoming" class="upcoming-color"
+                                    name="action_upcoming"
+                                    type="object"/>
+                        </div>
+
+                    </group>
+
+                    <group attrs="{'invisible':[('state','not in',['normal'])]}">
+                        <div class="text-right">
+                            <button string="Make Draft" statelevel="make_draft" class="make_draft-color"
+                                    name="action_make_draft"
+                                    type="object"
+                            />
+                            <button string="Available" statelevel="draft" class=" draft-color" name="action_draft"
+                                    type="object"/>
+                            <button string="Reserve" statelevel="book" class=" book-color" name="action_book"
+                                    type="object"/>
+                            <button string="On Lease" statelevel="normal" class="filllease-color" name="action_normal"
+                                    type="object"/>
+                            <!--<button string="Sale" statelevel="close" class="sale-color" name="action_close"-->
+                            <!--type="object"/>-->
+                            <button string="Sold" statelevel="sold" class="sold-color" name="action_sold"
+                                    type="object"/>
+                            <button string="Cancel" statelevel="cancel" class="cancel-color" name="action_cancel"
+                                    type="object"/>
+                            <button string="Block" statelevel="block" class="block-color" name="action_block"
+                                    type="object"/>
+                            <button string="Upcoming" statelevel="upcoming" class="upcoming-color"
+                                    name="action_upcoming"
+                                    type="object"/>
+                        </div>
+
+                    </group>
+
+                    <group attrs="{'invisible':[('state','not in',['close'])]}">
+                        <div class="text-right">
+                            <button string="Make Draft" statelevel="make_draft" class="make_draft-color"
+                                    name="action_make_draft"
+                                    type="object"
+                            />
+                            <button string="Available" statelevel="draft" class=" draft-color" name="action_draft"
+                                    type="object"/>
+                            <button string="Reserve" statelevel="book" class=" book-color" name="action_book"
+                                    type="object"/>
+                            <button string="On Lease" statelevel="normal" class="lease-color" name="action_normal"
+                                    type="object"/>
+                            <!--<button string="Sale" statelevel="close" class="fillsale-color " name="action_close"-->
+                            <!--type="object"/>-->
+                            <button string="Sold" statelevel="sold" class="sold-color" name="action_sold"
+                                    type="object"/>
+                            <button string="Cancel" statelevel="cancel" class="cancel-color" name="action_cancel"
+                                    type="object"/>
+                            <button string="Block" statelevel="block" class="block-color" name="action_block"
+                                    type="object"/>
+                            <button string="Upcoming" statelevel="upcoming" class="upcoming-color"
+                                    name="action_upcoming"
+                                    type="object"/>
+                        </div>
+
+                    </group>
+
+                    <group attrs="{'invisible':[('state','not in',['sold'])]}">
+                        <div class="text-right">
+                            <button string="Make Draft" statelevel="make_draft" class="make_draft-color"
+                                    name="action_make_draft"
+                                    type="object"
+                            />
+                            <button string="Available" statelevel="draft" class=" draft-color" name="action_draft"
+                                    type="object"/>
+                            <button string="Reserve" statelevel="book" class=" book-color" name="action_book"
+                                    type="object"/>
+                            <button string="On Lease" statelevel="normal" class="lease-color" name="action_normal"
+                                    type="object"/>
+                            <!--<button string="Sale" statelevel="close" class="sale-color " name="action_close"-->
+                            <!--type="object"/>-->
+                            <button string="Sold" statelevel="sold" class="fillsold-color" name="action_sold"
+                                    type="object"/>
+                            <button string="Cancel" statelevel="cancel" class="cancel-color" name="action_cancel"
+                                    type="object"/>
+                            <button string="Block" statelevel="block" class="block-color" name="action_block"
+                                    type="object"/>
+                            <button string="Upcoming" statelevel="upcoming" class="upcoming-color"
+                                    name="action_upcoming"
+                                    type="object"/>
+                        </div>
+
+                    </group>
+
+                    <group attrs="{'invisible':[('state','not in',['cancel'])]}">
+                        <div class="text-right">
+                            <button string="Make Draft" statelevel="make_draft" class="make_draft-color"
+                                    name="action_make_draft"
+                                    type="object"
+                            />
+                            <button string="Available" statelevel="draft" class=" draft-color" name="action_draft"
+                                    type="object"/>
+                            <button string="Reserve" statelevel="book" class=" book-color" name="action_book"
+                                    type="object"/>
+                            <button string="On Lease" statelevel="normal" class="lease-color" name="action_normal"
+                                    type="object"/>
+                            <!--<button string="Sale" statelevel="close" class="sale-color " name="action_close"-->
+                            <!--type="object"/>-->
+                            <button string="Sold" statelevel="sold" class="sold-color" name="action_sold"
+                                    type="object"/>
+                            <button string="Cancel" statelevel="cancel" class="fillcancel-color" name="action_cancel"
+                                    type="object"/>
+                            <button string="Block" statelevel="block" class="block-color" name="action_block"
+                                    type="object"/>
+                            <button string="Upcoming" statelevel="upcoming" class="upcoming-color"
+                                    name="action_upcoming"
+                                    type="object"/>
+                        </div>
+
+                    </group>
+
+                    <group attrs="{'invisible':[('state','not in',['block'])]}">
+                        <div class="text-right">
+                            <button string="Make Draft" statelevel="make_draft" class="make_draft-color"
+                                    name="action_make_draft"
+                                    type="object"
+                            />
+                            <button string="Available" statelevel="draft" class=" draft-color" name="action_draft"
+                                    type="object"/>
+                            <button string="Reserve" statelevel="book" class=" book-color" name="action_book"
+                                    type="object"/>
+                            <button string="On Lease" statelevel="normal" class="lease-color" name="action_normal"
+                                    type="object"/>
+                            <!--<button string="Sale" statelevel="close" class="sale-color " name="action_close"-->
+                            <!--type="object"/>-->
+                            <button string="Sold" statelevel="sold" class="sold-color" name="action_sold"
+                                    type="object"/>
+                            <button string="Cancel" statelevel="cancel" class="cancel-color" name="action_cancel"
+                                    type="object"/>
+                            <button string="Block" statelevel="block" class="fillblock-color" name="action_block"
+                                    type="object"/>
+                            <button string="Upcoming" statelevel="upcoming" class="upcoming-color"
+                                    name="action_upcoming"
+                                    type="object"/>
+                        </div>
+
+                    </group>
+                    <group attrs="{'invisible':[('state','not in',['upcoming'])]}">
+                        <div class="text-right">
+                            <button string="Make Draft" statelevel="make_draft" class="make_draft-color"
+                                    name="action_make_draft"
+                                    type="object"
+                            />
+                            <button string="Available" statelevel="draft" class=" draft-color" name="action_draft"
+                                    type="object"/>
+                            <button string="Reserve" statelevel="book" class=" book-color" name="action_book"
+                                    type="object"/>
+                            <button string="On Lease" statelevel="normal" class="lease-color" name="action_normal"
+                                    type="object"/>
+                            <!--<button string="Sale" statelevel="close" class="sale-color " name="action_close"-->
+                            <!--type="object"/>-->
+                            <button string="Sold" statelevel="sold" class="sold-color" name="action_sold"
+                                    type="object"/>
+                            <button string="Cancel" statelevel="cancel" class="cancel-color" name="action_cancel"
+                                    type="object"/>
+                            <button string="Block" statelevel="block" class="block-color" name="action_block"
+                                    type="object"/>
+                            <button string="Upcoming" statelevel="upcoming" class="fillupcoming-color"
+                                    name="action_upcoming"
+                                    type="object"/>
+                        </div>
+
+                    </group>
+                </xpath>
+                <xpath expr="//sheet/div[@name='button_box']" position="inside">
+                    <button name="action_view_logs" class="oe_stat_button" string="History"
+                            type="object"
+                            icon="fa-pencil-square-o"
+                            groups="bi_property_management_extend.history_visibility_group"/>
+
+                    <button name="action_document_view_history" class="oe_stat_button" string="File Views"
+                            type="object"
+                            icon="fa-pencil-square-o"/>
+                    <button name="action_view_lease_by_third_party" class="oe_stat_button" string="Lease by Third Party"
+                            type="object"
+                            icon="fa-pencil-square-o" attrs="{'invisible': [('from_sale', '=', True)]}">
+                    </button>
+                    <button name="action_view_sale_by_third_party" string="Sell by Third Party"
+                            type="object" class="oe_stat_button"
+                            icon="fa-pencil-square-o" attrs="{'invisible': [('from_sale', '!=', True)]}">
+                    </button>
+                    <button name="action_view_lease_contract"
+                            type="object" class="oe_stat_button"
+                            icon="fa-pencil-square-o" attrs="{'invisible': [('from_sale', '=', True)]}">
+                        <field string="Lease Contracts" name="lease_contract_count" widget="statinfo"/>
+                    </button>
+                    <button name="action_view_sale_contract"
+                            type="object" class="oe_stat_button"
+                            icon="fa-pencil-square-o" attrs="{'invisible': [('from_sale', '=', False)]}">
+                        <field string="Sale Contracts" name="sale_contract_count" widget="statinfo"/>
+                    </button>
+                </xpath>
+                <field name="image" position="replace"/>
+                <xpath expr="//page[@name='photos_documents']" position="replace"/>
+                <field name="active" position="replace"/>
+                <field name="parent_id" position="replace"/>
+                <!--                <field name="name" position="replace">-->
+                <!--                    <field name="name" required="1"  attrs="{'readonly':[('state','not in',['draft','draft_approval'])]}"/>-->
+                <!--                </field>-->
+                <field name="type_id" position="replace"/>
+                <field name="state" position="replace">
+                    <!--                    <field invisible="1" name="state"/>-->
+                    <field class="unit_state" invisible="1" name="state"/>
+
+                </field>
+                <button name="open_url" position="replace"/>
+
+                <!--                <xpath expr="//div[@class='oe_button_box']" position="replace"/>-->
+                <xpath expr="//div[hasclass('oe_title')]" position="replace">
+                    <div class="oe_title">
+                        <h3>
+                            <!--                            <field name="label" nolabel="1" style="font-size:20px !important;"/>-->
+                            <!--                            <field name="code" nolabel="1" readonly="1" style="font-size:20px !important;"/>-->
+
+                            <!--                            <field name="code_label"  />-->
+                            <field name="code_label" readonly="1" nolabel="1" style="font-size:20px !important;"/>
+                            <!--                            <field name="label_reference" nolabel="1" style="font-size:20px !important;"/>-->
+                            <!--                            <field name="label_reference"  />-->
+                        </h3>
+                        <field name="unit_type" widget="radio" class="oe_edit_only" options="{'horizontal': true}"/>
+                        <field name="from_sale" invisible="1"/>
+                    </div>
+                    <group>
+                        <field name="create_date" string="Create Date" readonly="1"/>
+                        <field name="write_date" string="Last Update Date" readonly="1"/>
+                    </group>
+                    <seperator string="Unit Details"/>
+                    <group string="Listing">
+                        <group>
+                            <field name="listing_user_id" readonly="False"/>
+                            <field name="listing_type" options="{'horizontal': true}"
+                                   attrs="{'invisible':[('from_sale','!=',True)]}"/>
+                            <field name="assigned_to" invisible="1"
+                                   options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"/>
+                            <field name="assigned_to_ids" widget="many2many_tags"/>
+                            <field name="listing_agent_id" string="Listing User"
+                                   options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"
+                                   readonly="False"/>
+
+                        </group>
+                        <group>
+                            <field name="listing_date"/>
+                            <field name="company_id"/>
+                            <field name="ownership"/>
+                            <field name="expire_date"/>
+                        </group>
+                    </group>
+                    <!--                                        <field name="unit_type" widget="radio" class="oe_edit_only" options="{'horizontal': true}"/>-->
+                </xpath>
+                <!--                                <xpath expr="//label[@for='street']" position="before">-->
+                <!--                                    -->
+                <!--                                </xpath>-->
+                <!--<field name="street" position="replace">-->
+                <!--</field>-->
+                <!--<field name="state_id" position="replace">-->
+                <!--<field name="state_id" class="oe_no_button" placeholder="States"-->
+                <!--options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"-->
+                <!--domain="[('country_id', '=', country_id)]" required="1"/>-->
+                <!--</field>-->
+                <field name="city" position="replace">
+                    <field name="city_id" placeholder="City..."
+                           options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}" required="1"/>
+                    <field name="district_id" placeholder="District.."
+                           domain="[('city_id', '=', city_id)]"
+                           options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}" required="1"/>
+                    <field name="property_community_id" placeholder="Community..."
+                           options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"
+                           domain="[('parent_id', '=', False),('district_id', '=', district_id)]" required="1"/>
+                    <field name="property_sub_community_id"
+                           placeholder="Sub Community..."
+                           options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"
+                           domain="[('parent_id', '!=', False),('parent_id', '=', property_community_id)]"
+                           required="1"/>
+                    <field name="street" placeholder="Street.." invisible="1"/>
+                </field>
+                <field name="township" position="before">
+                    <field name="parent_id" string="Property" invisible="1"/>
+                    <field name="property_master_id" required="1"/>
+                    <!--                    <div class="o_row">-->
+                    <!--                                    <button name="clear_property_master" string="Clear" type="object" icon="fa-bars"-->
+                    <!--                                            class="oe_inline"/>-->
+
+                    <!--                                </div>-->
+                    <!-- <field name="property_master_id"
+                           options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"
+                           attrs="{'invisible':[('unit_type','=','developer')]}"/>
+                    <field name="project_master_id"
+                           options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"
+                           attrs="{'invisible':[('unit_type','=','broker')]}"/> -->
+                </field>
+                <field name="zip" position="after">
+                    <field name="completion_date"/>
+                    <field name="is_managed" widget="radio" options="{'horizontal': true}" invisible="1"/>
+                    <field name="portfolio_id" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"
+                           attrs="{'invisible':[('is_managed','!=','managed')]}"/>
+                    <field name="portfolio_manager_id" attrs="{'invisible':[('is_managed','!=','managed')]}"/>
+                    <field name="management_type" attrs="{'invisible':[('is_managed','!=','managed')]}"/>
+                </field>
+                <xpath expr="//notebook" position="before">
+                    <group string="Unit Data">
+                        <group>
+                            <field name="active" invisible="1"/>
+                            <field name="type_id" options="{'no_quick_create':True,'no_create_edit':True}" required="1"
+                                   placeholder="Property Type" string="Unist Type"/>
+                            <field name="unit_type_id" invisible="1"/>
+                            <field name="unit_has_subtype" invisible="1"/>
+                            <field name="property_subtype_id" options="{'no_quick_create':True,'no_create_edit':True}"
+                                   placeholder="Property Type"
+                                   attrs="{'invisible':[('unit_type_id','in',('building','commercial_villa','compound_villas','industrial_land','labour_camp','mixed_used_building','offices','residential_land','townhouse','warehouse'))]}"/>
+
+                            <field name="unit_condition_id"
+                                   options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"
+                                   attrs="{'invisible':[('unit_type_id','in',('apartment','building','commercial_building','commercial_plot','commercial_villa','compound_villas','farm','industrial_land','labour_camp','mixed_used_building','mixed_used_plots','multiple_units','plot','residential_building','residential_land'))]}"/>
+                            <!--                            <field name="listing_type_rent" attrs="{'invisible':[('from_sale','=',True)]}"/>-->
+
+
+                            <field name="name"
+                                   attrs="{'readonly':[('state','not in',['new_draft','make_draft','draft','draft_approval','normal','book','close','sold','cancel','deleted','expired','approve','draft_approval','sent_to_approval','block','upcoming'])]}"
+                                   placeholder="Unit Numbers" string="Unit Numbers"/>
+
+                            <field name="floor_number"
+                                   attrs="{'invisible':[('unit_type_id','in',('villa','building','commercial_building','commercial_plot','commercial_villa','compound_villas','farm','industrial_land','labour_camp','mixed_used_building','mixed_used_plots','multiple_units','plot','residential_building','residential_land','townhouse'))]}"/>
+                            <field name="bedroom_id" options="{'no_quick_create':True,'no_create_edit':True}"
+                                   placeholder="Bed room"
+                                   attrs="{'required':[('unit_type_id','not in',('building','commercial_building','commercial_plot','farm','industrial_land','labour_camp','mixed_used_building','mixed_used_plots','multiple_units','office','offices','plot','residential_building','residential_land','retail','warehouse'))],
+                                   'invisible':[('unit_type_id','in',('building','commercial_building','commercial_plot','farm','industrial_land','labour_camp','mixed_used_building','mixed_used_plots','multiple_units','office','offices','plot','residential_building','residential_land','retail','warehouse'))]}"/>
+                            <field name="furnished" string="Furnished"
+                                   attrs="{'invisible':[('unit_type_id','in',('building','commercial_building','commercial_plot','farm','industrial_land','labour_camp','mixed_used_building','mixed_used_plots','multiple_units','offices','plot','residential_building','residential_land'))]}"/>
+                            <field name="new_address" attrs="{'invisible':[('unit_type_id','in',('building'))]}"/>
+                            <field name="unit_model"/>
+                            <field name="plot_number"/>
+                            <field name="primary_view_id"
+                                   options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"/>
+                            <field name="secondary_view_id"
+                                   options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"/>
+                            <field name="aspect"/>
+                            <field name="plot_area"/>
+                            <field name="no_of_rooms" attrs="{'invisible':[('unit_type_id','not in','office')]}"/>
+                            <field name="builtup_area" required="1"/>
+                            <label for="other_area"/>
+                            <div class="o_row">
+                                <field name="other_area_selection" class="oe_inline"/>
+                                <field name="other_area" class="oe_inline"/>
+                            </div>
+                            <field name="no_of_units" attrs="{'invisible':[('unit_type_id','not in','offices')]}"/>
+                            <field name="Unit_numbers" attrs="{'invisible':[('unit_type_id','not in','offices')]}"/>
+                            <field name="bed_capacity" attrs="{'invisible':[('unit_type_id','not in','labour_camp')]}"/>
+                            <field name="bedroom_details"
+                                   attrs="{'invisible':[('unit_type_id','not in','labour_camp')]}"/>
+                            <field name="no_of_bathrooms"
+                                   attrs="{'invisible':[('unit_type_id','in',('building','commercial_building','commercial_plot','farm','industrial_land','mixed_used_building','mixed_used_plots','multiple_units','offices','plot','residential_building','residential_land','warehouse'))]}"/>
+                            <field name="toilet_details"
+                                   attrs="{'invisible':[('unit_type_id','in',('building','commercial_building','commercial_plot','villa','apartment','commercial_villa','compound_villas','farm','industrial_land','mixed_used_building','mixed_used_plots','multiple_units','office','offices','plot','residential_building','residential_land','retail','townhouse','warehouse'))]}"/>
+                            <field name="kitchen_details"
+                                   attrs="{'invisible':[('unit_type_id','in',('building','commercial_building','commercial_plot','villa','apartment','commercial_villa','compound_villas','farm','industrial_land','mixed_used_building','mixed_used_plots','multiple_units','office','offices','plot','residential_building','residential_land','retail','townhouse','warehouse'))]}"/>
+                            <field name="no_of_blocks" attrs="{'invisible':[('unit_type_id','not in','labour_camp')]}"/>
+                        </group>
+                        <group>
+                            <field name="unit_category" attrs="{'invisible':[('unit_type_id','not in',('retail'))]}"/>
+                            <field name="roof_type" attrs="{'invisible':[('unit_type_id','not in',('warehouse'))]}"/>
+                            <field name="ceiling_height"
+                                   attrs="{'invisible':[('unit_type_id','not in',('warehouse'))]}"/>
+                            <field name="no_of_paved_roads"
+                                   attrs="{'invisible':[('unit_type_id','not in',('warehouse'))]}"/>
+                            <field name="usage_id" options="{'no_quick_create':True,'no_create_edit':True}"/>
+                            <field name="dining_room"
+                                   attrs="{'invisible':[('unit_type_id','not in',('labour_camp'))]}"/>
+                            <field name="recreation_room"
+                                   attrs="{'invisible':[('unit_type_id','not in',('labour_camp'))]}"/>
+                            <field name="watchman_room"
+                                   attrs="{'invisible':[('unit_type_id','not in',('labour_camp'))]}"/>
+                            <field name="water_tank_cpty"
+                                   attrs="{'invisible':[('unit_type_id','not in',('labour_camp'))]}"/>
+                            <field name="specific_tank_cpty"
+                                   attrs="{'invisible':[('unit_type_id','not in',('labour_camp'))]}"/>
+                            <field name="maintanence_fee_amount"/>
+                            <field name="service_charge"/>
+                            <field name="paid_until_date"/>
+                            <field name="title_type" invisible="1" widget="radio" options="{'horizontal': true}"/>
+                            <field name="mandate" widget="radio" options="{'horizontal': true}"/>
+                            <field name="can_view" widget="radio" options="{'horizontal': true}"/>
+                            <field name="handover_date" attrs="{'invisible':[('from_sale','!=',True)]}"/>
+                            <field name="consumer_no" attrs="{'invisible':[('from_sale','=',True)]}"/>
+                            <field name="upcoming" widget="radio" options="{'horizontal': true}"
+                                   attrs="{'invisible':[('from_sale','=',True)]}"/>
+                            <field name="vacating_date" attrs="{'invisible':[('upcoming','!=','yes')]}"/>
+                            <field name="owner_occupied" widget="radio" options="{'horizontal': true}"/>
+                            <field name="leased" widget="radio" options="{'horizontal': true}"
+                                   attrs="{'invisible':[('from_sale','!=',True)]}"/>
+                            <field name="rent_value"
+                                   attrs="{'required':[('leased','=','yes')],'invisible':[('leased','=','no')]}"/>
+                            <field name="expiry_date"
+                                   attrs="{'required':[('leased','=','yes')],'invisible':[('leased','=','no')]}"/>
+                            <field name="payment_method" widget="selection"
+                                   attrs="{'invisible':[('leased','=','no')]}"/>
+                            <field name="no_of_bathches" widget="selection"
+                                   attrs="{'invisible':[('leased','=','no')]}"/>
+                            <field name="for_sale" widget="radio" options="{'horizontal': true}"
+                                   attrs="{'invisible':[('from_sale','=',True)]}"/>
+                            <field name="title_deed_issued" widget="radio" options="{'horizontal': true}"/>
+                            <field name="title_deed_no"/>
+                            <field name="mortgage" widget="radio" options="{'horizontal': true}"
+                                   attrs="{'invisible':[('from_sale','!=',True)]}"/>
+                            <field name="finace_comp" attrs="{'invisible':[('mortgage','=','no')]}"/>
+                            <field name="finance_id" attrs="{'invisible':[('from_sale','!=',True)]}"/>
+                            <field name="full_floor"/>
+                            <field name="no_of_villa" placeholder="N/A"
+                                   attrs="{'invisible':[('unit_type_id','not in',('building','commercial_building','mixed_used_building','multiple_units','residential_building'))]}"/>
+                            <field name="no_of_apartments" placeholder="N/A"
+                                   attrs="{'invisible':[('unit_type_id','not in',('building','commercial_building','mixed_used_building','multiple_units','residential_building'))]}"/>
+                            <field name="retail_footage" placeholder="N/A"
+                                   attrs="{'invisible':[('unit_type_id','not in',('building','commercial_building','mixed_used_building','multiple_units','residential_building'))]}"/>
+                            <field name="office_footage" placeholder="N/A"
+                                   attrs="{'invisible':[('unit_type_id','not in',('building','commercial_building','mixed_used_building','multiple_units','residential_building'))]}"/>
+
+                            <field name="ejari_registered" widget="radio" options="{'horizontal': true}"/>
+                            <field name="ejari_contract_no"
+                                   attrs="{'required':[('ejari_registered','=','yes')],'invisible':[('ejari_registered','=','no')]}"/>
+                            <field name="ejari_management_contract_no"
+                                   attrs="{'required':[('ejari_registered','=','yes')],'invisible':[('ejari_registered','=','no')]}"/>
+
+                        </group>
+                    </group>
+                </xpath>
+                <xpath expr="//page[1]" position="before">
+                    <page name="Maintenance" string="Maintenance" invisible="1">
+                        <field name="unit_ids">
+                            <tree>
+                                <field name="maintenance_company_id"/>
+                                <field name="start_date"/>
+                                <field name="contract_date"/>
+                                <field name="end_date"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+
+                <xpath expr="//page[1]" position="before">
+                    <page name="owner" string="Owner" >
+                        <group >
+                            <group>
+                                <!--<label for="owner_name" string="Search"/>-->
+                                <!--<div class="o_row">-->
+                                <!--<field name="owner_name" />-->
+                                <!--</div>-->
+                                <field name="owner_id" required="1"/>
+                                <!--<label for="owner_create"/>-->
+                                <div class="o_row">
+                                    <button name="owner_create" string="Add" type="object" icon="fa-bars"
+                                            class="oe_inline"/>
+                                </div>
+                                <field name="owner_ids">
+                                    <tree editable="bottom">
+                                        <field name="partner_id"/>
+                                        <field name="email" readonly="1"/>
+                                        <field name="mobile" readonly="1"/>
+                                        <field name="lead_id" readonly="1"/>
+                                        <field name="ownership_perc"/>
+                                    </tree>
+                                </field>
+
+                            </group>
+                            <group>
+                                <field name="owner_lead_id"
+                                       options="{'no_quick_create':True,'no_open': True}"/>
+                                <!--<label for="owner_button"/>-->
+                                <div class="o_row">
+                                    <button name="owner_lead_button" string="Add" type="object" icon="fa-bars"
+                                            class="oe_inline"/>
+                                    <button name="owner_lead_refresh" string="Refresh" type="object" icon="fa-bars"
+                                            class="oe_inline"/>
+                                </div>
+                            </group>
+                        </group>
+
+                    </page>
+                    <page name="parking" string="Parking">
+                        <field name="parking_ids">
+                            <tree>
+                                <field name="parking_type"/>
+                                <field name="parking_no"/>
+                                <field name="no_of_spaces"/>
+                                <field name="paid_or_unpaid"/>
+                                <field name="charges_per_annum"/>
+                            </tree>
+                            <form>
+                                <group>
+                                    <group>
+                                        <field name="parking_type" required="1"/>
+                                        <field name="parking_no"/>
+                                        <field name="no_of_spaces" required="1"/>
+                                    </group>
+                                    <group>
+                                        <field name="paid_or_unpaid"/>
+                                        <field name="charges_per_annum" required="1"
+                                               attrs="{'invisible': [('paid_or_unpaid', '!=', 'paid')]}"/>
+                                    </group>
+                                </group>
+
+                            </form>
+                        </field>
+                    </page>
+                    <page name="custom_fields" string="Custom Fields" attrs="{'invisible':[('from_sale','=',True)]}">
+                        <group>
+                            <group>
+                                <field name="ejari_approval_ref"/>
+                                <field name="contract_start_date"/>
+                                <field name="contract_end_date"/>
+                                <field name="vacant"/>
+                            </group>
+                            <group>
+                                <field name="maintenance_start_date"/>
+                                <field name="maintenance_end_date"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page name="fittings" string="Fittings and Fixtures">
+                        <!--  group super admin -->
+                        <group col="12" string="Fittings">
+                            <group colspan="5">
+                                <div>
+                                    <field name="fit_ids" nolabel="1"
+                                           style="height: 250px !important; overflow-y:scroll;"
+                                           widget="many2many_checkboxes"/>
+                                </div>
+                            </group>
+                            <group colspan="2">
+                                <button name="add_field_fit" align="center" style="width:90%%"
+                                        type="object" string="Add"/>
+                                <br/>
+                                <button name="remove_field" align="center"
+                                        style="width:90%%" string="Remove" type="object" class="btn-primary"/>
+                                <br/>
+                                <button name="select_all_field" align="center"
+                                        style="width:90%%" string="Select All" type="object" class="btn-primary"/>
+                            </group>
+                            <group colspan="5">
+                                <div>
+                                    <field name="fittings_ids" nolabel="1"
+                                           style="height: 250px !important;" widget="many2many_tags"
+                                           options="{'no_create': True}"/>
+                                </div>
+                            </group>
+                        </group>
+
+                        <group col="12" string="Fixtures">
+                            <group colspan="5">
+                                <div>
+                                    <field name="fix_ids" nolabel="1"
+                                           style="height: 400px !important;overflow-y:scroll;"
+                                           widget="many2many_checkboxes"/>
+                                </div>
+                            </group>
+                            <group colspan="2">
+                                <button name="add_field_fixt" align="center" style="width:90%%"
+                                        type="object" string="Add"/>
+                                <br/>
+                                <button name="remove_field1" align="center"
+                                        style="width:90%%" string="Remove" type="object" class="btn-primary"/>
+                                <br/>
+                                <button name="select_all_field1" align="center"
+                                        style="width:90%%" string="Select All" type="object" class="btn-primary"/>
+                            </group>
+                            <group colspan="5">
+                                <div>
+                                    <field name="fixtures_ids" nolabel="1"
+                                           style="height: 400px !important;" widget="many2many_tags"
+                                           options="{'no_create': True}"/>
+                                </div>
+                            </group>
+                        </group>
+
+                        <group col="12" string="Amenities">
+                            <group colspan="5">
+                                <div>
+                                    <field name="amen_ids" nolabel="1"
+                                           style="height: 450px !important;overflow-y:scroll;"
+                                           widget="many2many_checkboxes"/>
+                                </div>
+                            </group>
+                            <group colspan="2">
+                                <button name="add_field_amen" align="center" style="width:90%%"
+                                        type="object" string="Add"/>
+                                <br/>
+                                <button name="remove_field2" align="center"
+                                        style="width:90%%" string="Remove" type="object" class="btn-primary"/>
+                                <br/>
+                                <button name="select_all_field2" align="center"
+                                        style="width:90%%" string="Select All" type="object" class="btn-primary"/>
+                            </group>
+                            <group colspan="5">
+                                <div>
+                                    <field name="amenities_ids" nolabel="1"
+                                           style="height: 450px !important;" widget="many2many_tags"
+                                           options="{'no_create': True}"/>
+                                </div>
+                            </group>
+                        </group>
+
+                        <group col="12" string="Facilities">
+                            <group colspan="5">
+                                <div>
+                                    <field name="faci_ids" nolabel="1"
+                                           style="height: 450px !important;overflow-y:scroll;"
+                                           widget="many2many_checkboxes"/>
+                                </div>
+                            </group>
+                            <group colspan="2">
+                                <button name="add_field_faci_ids" align="center" style="width:90%%"
+                                        type="object" string="Add"/>
+                                <br/>
+                                <button name="remove_field3" align="center"
+                                        style="width:90%%" string="Remove" type="object" class="btn-primary"/>
+                                <br/>
+                                <button name="select_all_field3" align="center"
+                                        style="width:90%%" string="Select All" type="object" class="btn-primary"/>
+                            </group>
+                            <group colspan="5">
+                                <div>
+                                    <field name="facilities_ids" nolabel="1"
+                                           style="height: 450px !important;" widget="many2many_tags"
+                                           options="{'no_create': True}"/>
+                                </div>
+                            </group>
+                        </group>
+                    </page>
+                    <page name="payables" string="Payables" attrs="{'invisible':[('from_sale','=',True)]}">
+                        <group string="Payables">
+                            <group>
+                                <field name="ac_chiller"/>
+                                <field name="ac_maintenance"/>
+                                <field name="utilities"/>
+                                <field name="ceiling"/>
+                                <field name="common_area_maintanence"/>
+                                <field name="electricity"/>
+                                <field name="flooring"/>
+                                <field name="garden_maintenance"/>
+                                <field name="insulation"/>
+                                <field name="internal"/>
+                                <field name="maintanence_of_commmon_areas"/>
+                                <field name="major_maintenance"/>
+                                <field name="other_utilities"/>
+                                <field name="point_of_sales_system"/>
+                                <field name="sewage"/>
+                                <field name="swimming_pool_maintenance"/>
+                                <field name="water"/>
+                                <field name="water_and_electricity"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page string="Images" name="photos">
+                        <group>
+                            <separator colspan="4"/>
+                            <div class="o_row">
+                                <button name="add_images" type="object" string="Add Images"
+                                        class="oe_highlight oe_edit_only"/>
+                                <button name="import_images_from_property" type="object" string="Import Images"
+                                        class="oe_highlight oe_edit_only"/>
+                                <button name="view_image_slideshow" type="object" string="Slideshow"
+                                        class="oe_highlight"/>
+                                <!-- <input id="cat_filter" type="text" name="cat_filter"/>
+                                <label for="cat_filter">Category Filter</label>
+                                <button name="filter_unit_image_by_category" string="Search" type="object" class="oe_highlight" src="/bi_mk_filter/static/description/SearchBtn.png" style="outline:none;"/>
+                                 -->
+
+                            </div>
+                            <div class="o_row">
+                                <div>
+                                    <field name="image_filer_category" style="width: 25%;"
+                                           placeholder="Enter any category name to filter"/>
+                                    <!-- <field name="unit_photo_category" string="Category"/> -->
+                                    <button name="filter_unit_image_by_category" string="Search" type="object"
+                                            class="oe_highlight oe_edit_only"
+                                            src="/bi_mk_filter/static/description/SearchBtn.png" style="outline:none;"/>
+                                </div>
+
+                            </div>
+                            <separator colspan="4"/>
+                            <field name="filter_image_ids" invisible="1"/>
+                            <field name="image_ids" nolabel="1" colspan="4" widget="one2many_selectable">
+                                <tree string="Photos" editable="bottom" create="1">
+                                    <field name="category_id" string="Category"/>
+                                    <field name="watermark" string="Watermark"/>
+                                    <field name="is_external_url" string="Is External Url"/>
+                                    <field name="external_url" string="External Url"
+                                           attrs="{'invisible': [('is_external_url', '=', False)],'required': [('is_external_url', '=', True)]}"/>
+                                    <field name="title_id" string="Title"/>
+                                    <field name="remarks" string="Remarks"/>
+                                    <!--<field name="doc_name" readonly="0" invisible="1"/>-->
+                                    <field name="marketing_image" string="Marketing Image"/>
+                                    <field name="photos" string="image" resize="120,120" widget="image" height="120"
+                                           nolabel="1"/>
+
+                                    <button name="mail_image" class="fa fa-envelope" type="object"/>
+                                    <button name="download_image" class="fa fa-download" type="object"/>
+
+                                </tree>
+                                <form string="Photos">
+                                    <!--                                    <header>-->
+                                    <!--                                        <button type="object" name="button_next"/>-->
+                                    <!--                                    </header>-->
+                                    <div style="width:100%;"> <!-- Main Div -->
+                                        <div style="float:left; width:70%;">
+                                            <field name="photos" filename="doc_name" widget="image" height="420"
+                                                   nolabel="1"/>
+                                        </div>
+                                        <div style="float:left; width:30%;">
+                                            <group>
+                                                <field name="marketing_image"/>
+                                                <field name="category_id" required="1"/>
+                                                <field name="is_external_url"/>
+                                                <field name="external_url"
+                                                       attrs="{'invisible': [('is_external_url', '=', False)],'required': [('is_external_url', '=', True)]}"/>
+                                                <field name="title_id"/>
+                                                <field name="remarks"/>
+                                                <field name="create_date" string="Entered On" readonly="1"/>
+                                                <field name="create_uid" string="Entered By" readonly="1"/>
+                                            </group>
+                                        </div>
+                                    </div>
+                                </form>
+                            </field>
+                        </group>
+                    </page>
+                    <page string="Marketing Map!!" name="geo_map">
+                        <!--                        <field name="unit_map"/>-->
+
+                        <group>
+                            <field name="location_url"/>
+                            <field name="latitude" id="latitude"/>
+                            <field name="longitude" id="longitude"/>
+                        </group>
+
+                        <group>
+                            <widget name="gmap_marker" lat="latitude" lng="longitude" description="name"/>
+
+                        </group>
+
+                        <!--<group>-->
+                        <!--<button name="open_url" string="Get Location" type="object"-->
+                        <!--icon="fa-location-arrow" colspan="2" class="oe_inline oe_stat_button"/>-->
+                        <!--</group>-->
+
+
+                    </page>
+
+                    <page string="Actual Map" name="map">
+                        <group>
+                            <group>
+                                <field name="new_url" widget="url"/>
+                                <field name="new_latitude" id="latitude"/>
+                                <field name="new_longitude" id="longitude"/>
+                            </group>
+                        </group>
+                        <group>
+                            <widget name="gmap_marker" lat="new_latitude" lng="new_longitude" description="name"/>
+                        </group>
+                    </page>
+                    <page name="payment_details_sale" string="Sale Details"
+                          attrs="{'invisible':[('from_sale','!=',True)]}">
+                        <group string="Payment Details">
+                            <field name="base_price" required="1"/>
+                            <!--<field name="ask_price"/>-->
+                        </group>
+                        <group>
+                            <label for="premium"/>
+                            <div>
+                                <field name="premium" class="oe_inline"/>%
+                                <field name="premium_percent" class="oe_inline" nolabel="1"/>
+                                of Base Price
+                            </div>
+                        </group>
+                        <group>
+                            <label for="agency_fee_seller"/>
+                            <div>
+                                <field name="agency_fee_seller" class="oe_inline"/>%
+                                <field name="agency_fee_percent" class="oe_inline" nolabel="1"/>
+                                of Base Price, Premium
+                            </div>
+                        </group>
+                        <group>
+                            <label for="discount"/>
+                            <div>
+                                <field name="discount" class="oe_inline"/>%
+                                <field name="discount_percent" class="oe_inline" nolabel="1"/>
+                                of Base Price
+                            </div>
+                        </group>
+                        <group col="2">
+                            <field name="selling_price"/>
+                        </group>
+                        <group>
+                            <label for="agency_fee_buyer"/>
+                            <div>
+                                <field name="agency_fee_buyer" class="oe_inline"/>%
+                                <field name="agency_fee_buyer_percent" class="oe_inline" nolabel="1"/>
+                                of Selling Price
+                            </div>
+                        </group>
+                        <group>
+                            <label for="transfer_fee_seller"/>
+                            <div>
+                                <field name="transfer_fee_seller" class="oe_inline"/>%
+                                <field name="transfer_fee_seller_percent" class="oe_inline" nolabel="1"/>
+                                of Selling Price
+                            </div>
+                        </group>
+                        <group>
+                            <label for="transfer_fee_buyer"/>
+                            <div>
+                                <field name="transfer_fee_buyer" class="oe_inline"/>%
+                                <field name="transfer_fee_buyer_percent" class="oe_inline" nolabel="1"/>
+                                of Base Price
+                            </div>
+                        </group>
+                        <group>
+                            <label for="transfer_fee"/>
+                            <div>
+                                <field name="transfer_fee" class="oe_inline"/>%
+                                <field name="transfer_fee_percent" class="oe_inline" nolabel="1"/>
+                                of Selling Price
+                            </div>
+                        </group>
+                        <group>
+                            <label for="seller_paid_amount"/>
+                            <div>
+                                <field name="seller_paid_amount" class="oe_inline"/>%
+                                <field name="seller_paid_amount_percent" class="oe_inline" nolabel="1"/>
+                                of Base Price
+                            </div>
+                        </group>
+                        <group col="2">
+                            <field name="no_of_payment"/>
+                            <field name="amount_due_to_developer"/>
+                            <field name="price_on_application" widget="radio" options="{'horizontal': true}"/>
+                            <field name="negotiable" widget="radio" options="{'horizontal': true}"/>
+                            <field name="selling_price_per_sq_ft"/>
+                            <field name="original_price_per_sq_ft"/>
+                        </group>
+
+                    </page>
+                    <page name="payment_details_rent" string="Payment Details"
+                          attrs="{'invisible':[('from_sale','=',True)]}">
+                        <group col="2" string="Payment Details">
+                            <group>
+                                <field name="rental_period" widget="selection" string="Rental Frequency" required="1"/>
+                                <field name="rent_per_sq_ft" attrs="{'invisible':[('rental_period','!=','year')]}"
+                                       required="1"/>
+                                <field name="rent_per_year" attrs="{'invisible':[('rental_period','!=','year')]}"
+                                       required="1"/>
+                                <field name="rent_per_sq_ft_month"
+                                       attrs="{'invisible':[('rental_period','!=','month')]}" required="1"/>
+                                <field name="rent_per_month" attrs="{'invisible':[('rental_period','!=','month')]}"
+                                       required="1"/>
+                                <field name="rent_per_week" attrs="{'invisible':[('rental_period','!=','week')]}"
+                                       required="1"/>
+                                <field name="rent_per_day" attrs="{'invisible':[('rental_period','!=','daily')]}"
+                                       required="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <label for="security_deposit"/>
+                            <div>
+                                <field name="security_deposit" class="oe_inline" required="1"/>%
+                                <field name="security_deposit_percent" class="oe_inline" nolabel="1" required="1"/>
+
+                            </div>
+                            <label for="commission"/>
+                            <div>
+                                <field name="commission" class="oe_inline" required="1"/>%
+                                <field name="commission_percent" class="oe_inline" nolabel="1" required="1"/>
+
+                            </div>
+                            <label for="agency_fee_landlord"/>
+                            <div>
+                                <field name="agency_fee_landlord" class="oe_inline"/>%
+                                <field name="agency_fee_landlord_percent" class="oe_inline" nolabel="1"/>
+
+                            </div>
+                        </group>
+                        <group col="2">
+                            <group>
+                                <field name="no_of_payment"/>
+                                <field name="price_on_application"/>
+                                <field name="split_commission"/>
+                                <field name="no_of_cheques"/>
+                                <field name="other"/>
+                                <field name="security_deposit_payable_to"/>
+                                <field name="commision_payable_to"/>
+                                <field name="rent_payable_to"/>
+                                <field name="rent_bank_id"
+                                       options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"/>
+                                <field name="bank_acc_no"/>
+                                <field name="purchase_price"/>
+                                <field name="comments"/>
+                            </group>
+
+                        </group>
+
+                    </page>
+                    <page name="buyer_summary" string="Buyer Summary" attrs="{'invisible':[('from_sale','!=',True)]}">
+                        <group string="Buyer Details">
+                            <group>
+                                <field name="agency_fee_buyer_s"/>
+                                <field name="transfer_fee_buyer_s"/>
+                                <field name="transfer_fee_s"/>
+                                <field name="seller_paid_amount_s"/>
+                                <field name="amount_due_to_developer_s"/>
+                                <field name="to_seller"/>
+                                <field name="discount_s"/>
+                                <field name="buyer_total_amount"/>
+                            </group>
+
+                        </group>
+                    </page>
+                    <page name="ref_details" string="Reference Details">
+                        <group string="Reference Information">
+                            <group>
+                                <label for="code" string="Unit Ref" attrs="{'invisible':[('from_sale','=',True)]}"/>
+                                <div class="o_row">
+                                    <field name="code" class="oe_inline"
+                                           attrs="{'invisible':[('from_sale','=',True)]}"/>
+                                    <span class="fa fa-question-circle" attrs="{'invisible':[('from_sale','=',True)]}"
+                                          title="A unique reference number generated by Aqary CRM. The first two letters denote the Unit Type (WH=Warehouse; LC=Labor Camp; RE=Retail; OF=Office; CV=Commercial Villa; CP=Commercial Plot; MP=Mixed Use Plot)."/>
+                                </div>
+
+                                <label for="code" string="Reference Number"
+                                       attrs="{'invisible':[('from_sale','=',False)]}"/>
+                                <div class="o_row">
+                                    <field name="code" class="oe_inline"
+                                           attrs="{'invisible':[('from_sale','=',False)]}"/>
+                                    <span class="fa fa-question-circle" attrs="{'invisible':[('from_sale','=',False)]}"
+                                          title="A unique reference number generated by Aqaryc CRM. The first two letters denote the Unit Type (WH=Warehouse; LC=Labor Camp; RE=Retail; OF=Office; CV=Commercial Villa; CP=Commercial Plot; MP=Mixed Use Plot)."/>
+                                </div>
+
+                                <label for="external_ref_no" string="External Ref No."/>
+                                <div class="o_row">
+                                    <field name="external_ref_no" class="oe_inline"/>
+                                </div>
+
+                                <label for="internal_referral_id"/>
+                                <div class="o_row">
+                                    <field name="internal_referral_id"
+                                           options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"
+                                           class="oe_inline"/>
+                                    <span class="fa fa-question-circle"
+                                          title="Name of the agent who referred this Unit and shares the commission. This information can be used in the Accounts module to allocate internal referral payments."/>
+                                </div>
+
+                                <label for="rera_str"/>
+                                <div class="o_row">
+                                    <field name="rera_str" class="oe_inline"/>
+                                    <span class="fa fa-question-circle"
+                                          title="RERA Special Transaction Report."/>
+                                </div>
+
+                                <field name="transaction_no"/>
+                                <label for="permit_number" string="MLS Number"/>
+                                <div class="o_row">
+                                    <field name="permit_number" class="oe_inline"/>
+                                    <button name="validate_permit_number" string="Validate" type="object"
+                                            class="oe_inline oe_edit_only"/>
+                                </div>
+
+                                <label for="send_for_approval"/>
+                                <div class="o_row">
+                                    <field name="send_for_approval" class="oe_inline"/>
+                                    <span class="fa fa-question-circle"
+                                          title="Tick-mark this to send the Unit for your Manager's approval (applicable only if Draft functionality is being used). Make sure to update at least 6 images and 1 floor plan."/>
+                                </div>
+                            </group>
+                            <group>
+                                <label for="key_status"/>
+                                <div class="o_row">
+                                    <field name="key_status" class="oe_inline"/>
+                                    <span class="fa fa-question-circle"
+                                          title="The location of the key. It is important to keep this information updated to allow agents to show the Unit."/>
+                                </div>
+
+                                <label for="no_of_keys"/>
+                                <div class="o_row">
+                                    <field name="no_of_keys" class="oe_inline"/>
+                                    <span class="fa fa-question-circle"
+                                          title="Number of keys given to the tenant"/>
+                                </div>
+
+                                <label for="referral_commision"/>
+                                <div class="o_row">
+                                    <field name="referral_commision" class="oe_inline"/>
+                                    <span class="fa fa-question-circle"
+                                          title="The percentage that will be used to calculate internal referral commission for the Internal Referral Agent."/>
+                                </div>
+                            </group>
+                        </group>
+
+                        <group string="Custom Fields" col="2" attrs="{'invisible':[('from_sale','=',True)]}">
+                            <group>
+                                <field name="ads_date"/>
+                            </group>
+                            <group/>
+                        </group>
+                        <group string="Account Details" col="2" invisible="1">
+                            <group>
+                                <field name="income_acc_id" required='0'/>
+                                <field name="expense_account_id" required='0'
+                                       domain="[('internal_type','=','other')]"/>
+                            </group>
+                            <group/>
+                        </group>
+                    </page>
+                    <page name="marketing" string="Marketing">
+                        <group string="Details">
+                            <group>
+                                <field name="md_property_community_id" readonly="1"/>
+                                <field name="md_property_sub_community_id" readonly="1"/>
+                                <field name="md_property_id" readonly="1"/>
+                                <field name="md_unit_type_id" readonly="1"/>
+                                <field name="md_bedroom_id" readonly="1"/>
+                                <field name="md_floor_no" string="Floor" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="md_builtup_area" readonly="1"/>
+                                <field name="md_primary_view_id" readonly="1"/>
+                                <field name="md_secondary_view_id" readonly="1"/>
+                                <field name="md_completion_date" readonly="1"/>
+                                <field name="md_selling_price" readonly="1"/>
+                                <field name="md_contact_id" readonly="1"/>
+                            </group>
+                        </group>
+                        <group string="Description">
+                            <group>
+                                <field name="usp"/>
+                            </group>
+                        </group>
+                        <group>
+                            <label for="marketing_title"/>
+                            <div class="o_row">
+                                <field name="marketing_title"/>
+                                <span style="float:right;">
+                                    <b>Character:
+                                        <field name="marketing_title_count"/>
+                                    </b>
+                                </span>
+                            </div>
+                        </group>
+
+                        <group>
+                            <label for="marketing_desc"/>
+                            <div class="o_row">
+                                <field name="marketing_desc" class="scrollabletextbox" style="font-size: 15px;line-height: 20px;"/>
+                                <span style="float:right;">
+                                    <b>
+                                        Character:
+                                        <field name="marketing_count"/>
+                                    </b>
+                                </span>
+                            </div>
+                        </group>
+
+                        <group>
+                            <label for="marketing_title_arabic"/>
+                            <div class="o_row">
+                                <field name="marketing_title_arabic"/>
+                                <span style="float:right;">
+                                    <b>
+                                        Character:
+                                        <field name="marketing_title_arabic_count"/>
+                                    </b>
+                                </span>
+                            </div>
+                        </group>
+                        <group>
+                            <label for="marketing_desc_arabic"/>
+                            <div class="o_row">
+                                <field name="marketing_desc_arabic" class="scrollabletextbox" style="font-size: 15px;line-height: 20px;"/>
+                                <span style="float:right;">
+                                    <b>
+                                        Character:
+                                        <field name="marketing_desc_arabic_count"/>
+                                    </b>
+                                </span>
+                            </div>
+                        </group>
+                        <br/>
+                        <script>
+                            $('.add_agent_signature').click(function($e) {
+                            $e.preventDefault();
+                            });
+                        </script>
+                        <div style="display: inline-block">
+                            <strong>Insert</strong>
+                            <!--<span style="display:inline-block; width: 10px;"></span>-->
+                            <button name="add_agent_signature" string="Agent Signature" type="object"
+                                    class="oe_inline add_agent_signature" data-toggle="modal"
+                                    data-target=".marketing_desc"/>
+                            <!--<span style="display:inline-block; width: 10px;"></span>-->
+                            <button name="add_company_profile" string="Company Profile" type="object"
+                                    class="oe_inline"/>
+                            <!--<span style="display:inline-block; width: 10px;"></span>-->
+                            <button name="add_property_overview" string="Property Overview" type="object"
+                                    class="oe_inline"/>
+                            <!--<span style="display:inline-block; width: 10px;"></span>-->
+                            <button name="add_community_description" string="Community Description" type="object"
+                                    class="oe_inline"/>
+                            <!--<span style="display:inline-block; width: 10px;"></span>-->
+                            <button name="add_template" string="Template" type="object" class="oe_inline"/>
+                        </div>
+                        <group string="Print Media" col="2">
+                            <field name="newspaper_ad"/>
+                            <field name="recommended_properties"/>
+                        </group>
+                        <group string="Web Portals"
+                               groups="finehome_user.group_super_admin">
+                            <field name="web_portal_ids"
+                                   groups="finehome_user.group_super_admin">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="image" widget="image"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                    <page string="Payment Plan" attrs="{'invisible':[('from_sale','!=',True)]}">
+                        <field name="payment_plan_ids">
+                            <tree create="false" edit="false">
+                                <field name="name"/>
+                                <field name="payment_type_id"/>
+                                <field name="amount_nature"/>
+                                <field name="installment_no"/>
+                                <field name="installment_rate"/>
+                                <field name="description"/>
+                            </tree>
+                        </field>
+                        <group>
+                            <button name="add_installment" string="Add" type="object"
+                                    class="oe_highlight oe_edit_only"/>
+                        </group>
+                    </page>
+                    <page string="Notes" name="notes">
+                        <group>
+                            <field name="notes_ids" nolabel="1" string="Notes">
+                                <tree string="Notes">
+                                    <field name="unit_record_id" invisible="1"/>
+                                    <field name="notes"/>
+
+                                </tree>
+                                <form string="Notes">
+                                    <group>
+                                        <field name="unit_record_id" invisible="1"/>
+                                        <field name="notes"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </group>
+
+                    </page>
+                    <page string="Documents" name="documents" >
+                        <group>
+                            <separator colspan="4"/>
+                            <div class="row">
+                                <button name="add_documents" type="object" string="Add Documents"
+                                        class="oe_highlight oe_edit_only"/>
+                                <button name="import_documents_from_property" type="object"
+                                        string="Import Documents" class="oe_highlight oe_edit_only"/>
+
+                            </div>
+                            <div class="o_row">
+                                <div>
+                                    <!--commenting for checking documents issue-->
+                                    <!--<field name="document_filer_category" style="width: 25%;"-->
+                                    <!--placeholder="Enter any category name to filter"/>-->
+                                    <button name="filter_documents_by_category" string="Search" type="object"
+                                            class="oe_highlight"/>
+                                </div>
+
+                            </div>
+                            <separator colspan="4"/>
+                            <field name="contract_attachment_ids" nolabel="1" colspan="4" widget="one2many_selectable">
+                                <tree string="Documents" create="0">
+                                    <button name="action_view_record"
+                                            type="object"
+                                            icon="fa-eye"
+                                            string="open"
+                                            class="custom_identifier"/>
+                                    <field name="contract_attachment" required="1"/>
+                                    <field name="doc_name" readonly="0"/>
+                                    <field name="category_id"/>
+                                    <field name="title_id"/>
+                                    <field name="create_date" string="Entered On" readonly="1"/>
+                                    <field name="create_uid" string="Entered By" readonly="1"/>
+                                    <field name="expiry_date"/>
+                                    <field name="remarks" colspan="2"/>
+                                    <!--  <button name="mail_document" string="Send" icon="fa fa-envelope fa-lg"
+                                             class="fa fa-cog fa-spin fa-3x fa-fw" type="object"/> -->
+
+                                    <!--                                    <field name="document_ids" filename="doc_name"/>-->
+                                </tree>
+                                <form string="Documents">
+                                    <group colspan="4" col="4">
+                                        <field name="contract_attachment" required="1"/>
+                                        <!--<field name="doc_name" readonly="0" invisible="1"/>-->
+                                        <field name="category_id"/>
+                                        <field name="title_id"/>
+                                        <field name="create_date" string="Entered On" readonly="1"/>
+                                        <field name="create_uid" string="Entered By" readonly="1"/>
+                                        <field name="expiry_date"/>
+                                        <field name="remarks" colspan="2"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </group>
+                    </page>
+                    <page string="Marketing Documents" name="marketing_documents" invisible="1">
+                        <group>
+                            <!--                            <button name="send_documents" type="object" string="Send" class="oe_highlight"/>-->
+
+                            <separator colspan="4"/>
+                            <field name="marketing_attachment_ids" nolabel="1" colspan="4" widget="one2many_selectable">
+                                <tree string="Documents" create="0">
+                                    <field name="contract_attachment" required="1"/>
+                                    <!--<field name="doc_name" readonly="0" invisible="1"/>-->
+                                    <field name="category_id"/>
+                                    <field name="title_id"/>
+                                    <field name="create_date" string="Entered On" readonly="1"/>
+                                    <field name="create_uid" string="Entered By" readonly="1"/>
+                                    <field name="expiry_date"/>
+                                    <field name="remarks" colspan="2"/>
+                                    <button name="mail_document" string="Send" icon="fa fa-envelope fa-lg"
+                                            class="fa fa-cog fa-spin fa-3x fa-fw" type="object"/>
+
+                                    <!--                                    <field name="document_ids" filename="doc_name"/>-->
+                                </tree>
+                                <form string="Documents">
+                                    <group colspan="4" col="4">
+                                        <field name="category_id"/>
+                                        <!--                                        <field name="name" colspan="2"/>-->
+                                        <field name="remarks" colspan="2"/>
+                                        <field name="expiry_date"/>
+                                        <newline/>
+                                        <field name="contract_attachment" filename="doc_name" required="1"/>
+                                        <!--                                        <field name="document_ids" filename="doc_name" required="1"-->
+                                        <!--                                               widget="many2many_binary"/>-->
+                                        <field name="doc_name" readonly="0" invisible="1"/>
+                                        <field name="is_private"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </group>
+                        <group>
+                            <button name="add_marketing_documents" type="object" string="Add Documents"
+                                    class="oe_highlight"/>
+
+                        </group>
+                    </page>
+                    <page string="Remarks">
+                        <field name="remarks_ids">
+                            <tree create="1" delete="0">
+                                <field name="name"/>
+                                <field name="remarks"/>
+                                <field name="notifier_id"/>
+                            </tree>
+
+                            <form>
+                                <group>
+                                    <field name="name" required="1"/>
+                                    <field name="remarks" required="1"/>
+                                    <field name="notifier_id"/>
+                                    <field name="remark_for" widget="radio" options="{'horizontal': true}"/>
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                    <page string="Open House">
+                        <field name="open_house_ids">
+                            <tree editable="bottom">
+                                <field name="start_time"/>
+                                <field name="end_time"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Activities">
+                        <field name="activities_ids">
+                            <tree create="1" delete="0">
+                                <field name="type_id"/>
+                                <field name="subject"/>
+                                <field name="entered_by_id"/>
+                                <field name="assigned_to_id"/>
+                                <field name="activity_date"/>
+                                <field name="state"/>
+                            </tree>
+                            <form string="CRM Activity">
+                                <sheet>
+                                    <group string="Add New Activity">
+                                        <group>
+                                            <!--                        <field name="name" required="1"/>-->
+                                            <field name="assigned_to_id" required="1"
+                                                   options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"/>
+                                            <field name="activity_date" required="1"/>
+
+                                        </group>
+                                        <group>
+                                            <field name="type_id" required="1"
+                                                   options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"/>
+                                            <field name="state"/>
+                                            <field name="copy_activity_to"/>
+                                            <field name="entered_by_id" readonly="1"/>
+                                            <field name="entered_on" readonly="1"/>
+
+                                        </group>
+                                    </group>
+                                    <group>
+                                        <field name="subject"/>
+                                        <field name="comments"/>
+                                    </group>
+                                    <group>
+                                        <field name="reminder_ids">
+                                            <tree editable="bottom">
+                                                <field name="reminder_type"/>
+                                                <field name="interval"/>
+                                                <field name="interval_type"/>
+                                            </tree>
+                                        </field>
+                                    </group>
+                                </sheet>
+
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
+
+                <xpath expr="//sheet" position="after">
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" invisible="1"/>
+                        <field name="message_ids" widget="mail_thread" invisible="1"/>
+                    </div>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- <record id='view_crm_partner_gmap' model='ir.ui.view'>
+            <field name="name">res.partner.gmap</field>
+            <field name="model">res.partner</field>
+            <field name="type">gmaps</field>
+                <field name="arch" type="xml">
+                <field name="partner_latitude"/>
+                <field name="partner_longitude"/>
+                <field name="name"/>
+                <widget name="gmap_marker" lat="partner_latitude" lng="partner_longitude" description="name"/>
+            </field>
+        </record> -->
+
+        <!--commented by pk-->
+        <!--<record model="ir.ui.view" id="view_account_asset_asset_form_dc_inherited">-->
+        <!--<field name="name">account.asset.asset.dc</field>-->
+        <!--<field name="model">account.asset.asset</field>-->
+        <!--<field name="inherit_id" ref="view_account_asset_asset_form_dc"/>-->
+        <!--<field name="groups_id" eval="[(6, 0, [ref('base.group_erp_manager')])]"/>-->
+        <!--<field name="arch" type="xml">-->
+        <!--<xpath expr="//field[@name='listing_agent_id']" position="attributes">-->
+        <!--<attribute name="readonly">False</attribute>-->
+        <!--</xpath>-->
+        <!--</field>-->
+        <!--</record>-->
+
+        <!--        <record id="prop_sale_ext_view_inherit" model="ir.ui.view">-->
+        <!--            <field name="name">account.asset.asset.form.hide_purchase</field>-->
+        <!--            <field name="model">account.asset.asset</field>-->
+        <!--            <field name="inherit_id" ref="property_sale_purchase.prop_sale_ext_view"/>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <xpath expr="//page" position="attributes">-->
+        <!--                    <attribute name="attrs">{'invisible': [('from_sale', '!=',True)],-->
+        <!--                        'readonly':[('state','in',('sold','close'))]}-->
+        <!--                    </attribute>-->
+        <!--                </xpath>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+
+        <!-- <record id="property_sale_purchase.prop_sale_ext_view" model="ir.ui.view">
+            <field name="name">account.asset.asset.form</field>
+            <field name="model">account.asset.asset</field>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <header>
+                        <button name="share" type="object" string="Share" class="oe_highlight"
+                                style="background-color: #e49314;border-color: #e49314;"
+                                icon="fa-share"/>
+                        <button class="oe_highlight"
+                                style="background-color: #82a8bf;border-color: #82a8bf;"
+                                name="action_create_lease_contract" string="New Lease Contract"
+                                attrs="{'invisible': [('from_sale', '=', True)]}"
+                                type="object"/>
+                        <button class="oe_highlight"
+                                style="background-color: #82a8bf;border-color: #82a8bf;"
+                                name="action_create_sale_contract" string="New Sale Contract"
+                                attrs="{'invisible': [('from_sale', '=', False)]}"
+                                type="object"/>
+
+                                               <button class="o_dropdown_toggler_btn btn btn-sm dropdown-toggle"
+                                                       style="background-color: #82a8bf;border-color: #82a8bf;"
+                                                       string="Share"
+                                                       data-toggle="dropdown"/>
+                    </header>
+                </xpath>
+                <xpath expr="//sheet/div[@name='button_box']" position="inside">
+                    <button name="action_view_logs" string="History"
+                            type="object" class="oe_stat_button"
+                            icon="fa-pencil-square-o"/>
+
+                    <button name="action_document_view_history" string="File Views"
+                            type="object" class="oe_stat_button"
+                            icon="fa-pencil-square-o"/>
+                    <button name="action_view_lease_by_third_party" string="Lease by Third Party"
+                            type="object" class="oe_stat_button"
+                            icon="fa-pencil-square-o" attrs="{'invisible': [('from_sale', '=', True)]}">
+                    </button>
+                    <button name="action_view_sale_by_third_party" string="Sell by Third Party"
+                            type="object" class="oe_stat_button"
+                            icon="fa-pencil-square-o" attrs="{'invisible': [('from_sale', '!=', True)]}">
+                    </button>
+                    <button name="action_view_lease_contract"
+                            type="object" class="oe_stat_button"
+                            icon="fa-pencil-square-o" attrs="{'invisible': [('from_sale', '=', True)]}">
+                        <field string="Lease Contracts" name="lease_contract_count" widget="statinfo"/>
+                    </button>
+                    <button name="action_view_sale_contract"
+                            type="object" class="oe_stat_button"
+                            icon="fa-pencil-square-o" attrs="{'invisible': [('from_sale', '=', False)]}">
+                        <field string="Sale Contracts" name="sale_contract_count" widget="statinfo"/>
+                    </button>
+                </xpath>
+                <xpath expr="//page[@name='nearest_place']" position="before">
+                    <page string="Purchase And Sale Details" invisible="1"
+                          attrs="{'readonly':[('state','in',('sold','close'))]}">
+                        <separator string="Payment Details" colspan="4"/>
+                        <group colspan="4" col='4'
+                               attrs="{'readonly':[('state','in',('sold','close'))]}">
+                            <field name="sale_date"/>
+                            <field name="sale_price" widget="monetary"
+                                   options="{'currency_field': 'currency_id'}"/>
+                            <field name="payment_term"/>
+                            <field name="customer_id"/>
+                            <field name="partner_id"/>
+                        </group>
+                        <newline/>
+                        <group col="2" colspan="2">
+                            <button name="genrate_payment_enteries" string="Create Enteries"
+                                    type="object" colspan="2" class="oe_stat_button oe_highlight"
+                                    attrs="{'invisible':[('sale_instl_chck','!=',False)]}"/>
+                            <field name="sale_instl_chck" invisible="1"/>
+
+                            <label string="   "/>
+                            <button name="button_sold" string="  Sale   " colspan="2"
+                                    type="object" states='close' class="oe_stat_button oe_highlight"/>
+                        </group>
+                        <newline/>
+                        <separator string="Sales Cost" colspan="4"/>
+                        <field name="sale_cost_ids" nolabel="1" colspan="4"
+                               attrs="{'readonly':[('state','in',('sold','close'))]}">
+                            <tree string="Sale Cost Details" editable="bottom">
+                                <field name="date"/>
+                                <field name="currency_id"/>
+                                <field name="amount"/>
+                                <field name="payment_details"/>
+                                <field name="move_check"/>
+                                <field name="remaining_amount"/>
+                                <field name="rmn_amnt_per"/>
+                                <button name="create_invoice" attrs="{'invisible':[('move_check','=',True)]}"
+                                        icon="fa fa-gear fa-lg" class="fa fa-cog fa-spin fa-3x fa-fw"
+                                        string="Create Invoice" type="object"/>
+                                <button name="open_invoice" attrs="{'invisible':[('move_check','=',False)]}"
+                                        icon="fa-arrow-circle-o-right fa-lg" class="fa fa-cog fa-spin fa-3x fa-fw"
+                                        string="Open Invoice" type="object"/>
+                            </tree>
+                            <form string="Cost Details">
+                                <group colspan="4">
+                                    <field name="date"/>
+                                    <field name="currency_id"/>
+                                    <field name="amount"/>
+                                    <field name="payment_details"/>
+                                    <field name="move_check"/>
+                                    <field name="remaining_amount"/>
+                                    <field name="rmn_amnt_per"/>
+                                    <field name="invc_id" invisible="1"/>
+                                </group>
+                            </form>
+                        </field>
+                        <separator string="Purchase Details" colspan="4"/>
+                        <group colspan="4" col="4">
+                            <field name="date" required="1"/>
+                            <field name="end_date"/>
+                            <field name="purchase_price" widget="monetary"
+                                   options="{'currency_field': 'currency_id'}"/>
+                            <field name="multiple_owners"/>
+                            <field name="total_owners" attrs="{'invisible':[('multiple_owners','=',False)]}"/>
+                            <field name="recurring_rule_type"/>
+                            <button name="create_purchase_installment" string="Create Installment"
+                                    type="object" colspan="2" class="oe_highlight oe_stat_button"
+                                    attrs="{'invisible':[('pur_instl_chck','!=',False)]}"/>
+                            <field name="pur_instl_chck" invisible="1"/>
+                        </group>
+                        <newline/>
+                        <separator string="Purchase Cost" colspan="4"/>
+                        <field name="purchase_cost_ids" nolabel="1" colspan="4"
+                               context="{}">
+                            <form string="Cost Details">
+                                <group colspan="4">
+                                    <field name="name"/>
+                                    <field name="date"/>
+                                    <field name="amount"/>
+                                    <field name="currency_id"/>
+                                    <field name="move_id"/>
+                                    <field name="purchase_property_id" invisible="1"/>
+                                    <field name="payment_details"/>
+                                    <field name="remaining_amount"/>
+                                    <field name="rmn_amnt_per"/>
+                                    <field name="invc_id" invisible="1"/>
+                                </group>
+                            </form>
+                            <tree string="Purchase Cost Details" editable="bottom">
+                                <field name="date"/>
+                                <field name="currency_id"/>
+                                <field name="amount" sum="Total Cost"/>
+                                <field name="payment_details"/>
+                                <field name="move_check"/>
+                                <field name="remaining_amount"/>
+                                <field name="rmn_amnt_per"/>
+                                <field name="name" string="Notes"/>
+                                <button name="create_invoice" attrs="{'invisible':[('move_check','=',True)]}"
+                                        icon="fa fa-gear fa-lg" class="fa fa-cog fa-spin fa-3x fa-fw"
+                                        string="Create Invoice" type="object"/>
+                                <button name="open_invoice" attrs="{'invisible':[('move_check','=',False)]}"
+                                        icon="fa-arrow-circle-o-right fa-lg" class="fa fa-cog fa-spin fa-3x fa-fw"
+                                        string="Open Invoice" type="object"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath
+                        expr="/form/sheet/notebook/page[@name='occupancy']/group[@name='property_performance']/field[@name='operational_costs']"
+                        position="before">
+                    <field name="return_period"/>
+                </xpath>
+            </field>
+        </record> -->
+
+        <record id="view_account_asset_search_mk_sale" model="ir.ui.view">
+            <field name="name">account.asset.asset.search.mk.sale</field>
+            <field name="model">account.asset.asset</field>
+            <field name="arch" type="xml">
+                <search string="Property View">
+                    <field name="property_community_id"/>
+                    <field name="listing_agent_id"/>
+                    <field name="owner_family_name"/>
+                    <field name="owner_id" string="Owner(First Name)"/>
+                    <field name="selling_price" string="Price"/>
+                    <field name="property_master_id" string="Property Name"/>
+                    <field name="code" string="Reference No"/>
+                    <field name="property_sub_community_id" string="Sub Community"/>
+                    <field name="unit_model"/>
+                    <field name="name"/>
+                    <filter string="My Units" name="my_unit" domain="[('listing_agent_id','=',uid)]"/>
+                    <filter string="Active" name="active" domain="[('active','=',1)]"/>
+                    <filter string="In Active" name="active" domain="[('active','!=',1)]"/>
+                    <filter string="Available" name="available" domain="[('state','=','draft')]"/>
+                    <filter string="On Lease" name="on_lease" domain="[('state','=','normal')]"/>
+                    <filter string="Booked" name="book" domain="[('state','=','book')]"/>
+                    <filter string="Cancel" name="cancel" domain="[('state','=','cancel')]"/>
+                    <filter string="Sale" name="sale" domain="[('state','=','close')]"/>
+                    <filter string="Sold" name="sold" domain="[('state','=','sold')]"/>
+                    <filter string="Parent Property" name="property"
+                            domain="[('parent_id','=',False)]"/>
+                    <filter string="Child Property" name="property"
+                            domain="[('parent_id','!=',False)]"/>
+                    <field name="name"/>
+                    <field name="type_id"/>
+                    <field name="parent_id"/>
+                    <field name="furnished"/>
+                    <field name="ground_rent"/>
+                    <field name="age_of_property"/>
+                    <newline/>
+                    <group expand="0" string="Group By..." colspan="4" col="10">
+                        <filter string="Property Type" name="PropertyType" domain="[]"
+                                context="{'group_by':'type_id'}"/>
+                        <filter string="Furnish Type" name="FurnishType" domain="[]"
+                                context="{'group_by':'furnished'}"/>
+                        <filter string="Country" name="country"
+                                domain="[]" context="{'group_by':'country_id'}"/>
+                        <filter string="Date" name="Date" context="{'group_by':'age_of_property'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_account_asset_search_mk_lease" model="ir.ui.view">
+            <field name="name">account.asset.asset.search.mk.lease</field>
+            <field name="model">account.asset.asset</field>
+            <field name="arch" type="xml">
+                <search string="Property View">
+                    <field name="property_community_id"/>
+                    <field name="owner_id" string="Leased By"/>
+                    <field name="listing_agent_id"/>
+                    <field name="property_master_id" string="Property Name"/>
+                    <field name="code" string="Reference No"/>
+                    <field name="rent_per_year"/>
+                    <field name="rent_per_month"/>
+                    <field name="property_sub_community_id" string="Sub Community"/>
+                    <field name="unit_model"/>
+                    <field name="name"/>
+                    <filter string="My Units" name="my_unit" domain="[('listing_agent_id','=',uid)]"/>
+                    <filter string="Active" name="active" domain="[('active','=',1)]"/>
+                    <filter string="In Active" name="active" domain="[('active','!=',1)]"/>
+                    <filter string="Available" name="available" domain="[('state','=','draft')]"/>
+                    <filter string="On Lease" name="on_lease" domain="[('state','=','normal')]"/>
+                    <filter string="Booked" name="book" domain="[('state','=','book')]"/>
+                    <filter string="Cancel" name="cancel" domain="[('state','=','cancel')]"/>
+                    <filter string="Sale" name="sale" domain="[('state','=','close')]"/>
+                    <filter string="Sold" name="sold" domain="[('state','=','sold')]"/>
+                    <filter string="Parent Property" name="property"
+                            domain="[('parent_id','=',False)]"/>
+                    <filter string="Child Property" name="property"
+                            domain="[('parent_id','!=',False)]"/>
+                    <field name="name"/>
+                    <field name="type_id"/>
+                    <field name="parent_id"/>
+                    <field name="furnished"/>
+                    <field name="ground_rent"/>
+                    <field name="age_of_property"/>
+                    <newline/>
+                    <group expand="0" string="Group By..." colspan="4" col="10">
+                        <filter string="Property Type" name="propertyType" icon="terp-personal" domain="[]"
+                                context="{'group_by':'type_id'}"/>
+                        <filter string="Furnish Type" name="FurnishType" icon="terp-personal" domain="[]"
+                                context="{'group_by':'furnished'}"/>
+                        <filter string="Country" name="country" icon="terp-personal"
+                                domain="[]" context="{'group_by':'country_id'}"/>
+                        <filter string="Date" name="DateType" context="{'group_by':'age_of_property'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <!--          <record id="action_batch_upload" model="ir.actions.act_window">
+                    <field name="name">Batch Upload</field>
+                    <field name="type">ir.actions.act_window</field>
+                    <field name="res_model">account.asset.asset</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">form</field>
+                    <field name="view_id" ref="view_purchase_new_wizard"/>
+                    <field name="target">new</field>
+                </record>
+
+                <record model="ir.values" id="batch_upload_property_managements">
+                    <field name="model_id" ref="account_asset.model_account_asset_asset" />
+                    <field name="name">Batch Upload</field>
+                    <field name="key2">client_action_multi</field>
+                    <field name="value" eval="'ir.actions.act_window,' + str(ref('action_batch_upload'))" />
+                    <field name="key">action</field>
+                    <field name="model">account.asset.asset</field>
+                </record> -->
+
+        <record id="action_select_columns" model="ir.actions.act_window">
+            <field name="name">Select Coloumns</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.asset.asset</field>
+            <field name="view_mode">form</field>
+            <!-- <field name="view_id" ref="view_purchase_new_wizard"/> -->
+            <field name="target">new</field>
+        </record>
+
+        <!--<record model="ir.values" id="select_columns_propertys_management">-->
+        <!--<field name="model_id" ref="base_accounting_kit.model_account_asset_asset"/>-->
+        <!--<field name="name">Select Coloumns</field>-->
+        <!--<field name="key2">client_action_multi</field>-->
+        <!--<field name="value" eval="'ir.actions.act_window,' + str(ref('action_select_columns'))"/>-->
+        <!--<field name="key">action</field>-->
+        <!--<field name="model">account.asset.asset</field>-->
+        <!--</record>-->
+
+        <record id="unit_payment_plan_form_view" model="ir.ui.view">
+            <field name="name">unit.payment.plan</field>
+            <field name="model">unit.payment.plan</field>
+            <field name="arch" type="xml">
+                <form string="Add Installment">
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="payment_type_id"/>
+                            <field name="amount_nature"/>
+                            <field name="installment_rate"/>
+                        </group>
+                        <group>
+                            <field name="frequency"/>
+                            <field name="freq_month" widget="mask"
+                                   data-inputmask="'placeholder': ''"
+                                   attrs="{'invisible': [('frequency', '!=', 'month')],'required': [('frequency', '=', 'month')]}"/>
+                            <field name="freq_date"
+                                   attrs="{'invisible': [('frequency', '!=', 'date')],'required': [('frequency', '=', 'date')]}"/>
+                            <field name="freq_day" widget="mask"
+                                   data-inputmask="'placeholder': ''"
+                                   attrs="{'invisible': [('frequency', '!=', 'day')],'required': [('frequency', '=', 'day')]}"/>
+                            <field name="installment_no"/>
+                        </group>
+
+
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <footer>
+                        <button name="confirm" type="object" string="Confirm"
+                                class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!--Account Asset-->
+        <!-- <record id="view_print_new_wizard" model="ir.ui.view">
+            <field name="name">account.asset.print.wizard</field>
+            <field name="model">account.asset.print.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Unit">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="account_asset_id" string="Asset Id" invisible="1"/>
+                                <field name="date_from" invisible="1"/>
+                                <field name="date_to" invisible="1"/>
+                            </group>
+                        </group>
+
+                        <footer>
+                            <button name="check_report" string="Print Peport" type="object" confirm="Do you want to the report?" class="oe_highlight" />
+                            or
+                            <button special="cancel" string="Cancel" class="oe_link"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_print" model="ir.actions.act_window">
+            <field name="name">Print</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.asset.asset</field>
+            <field name="res_model">account.asset.print.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_print_new_wizard"/>
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.values" id="action_print_propertys_management">
+            <field name="model_id" ref="account_asset.model_account_asset_asset" />
+            <field name="name">Print</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('action_print'))" />
+            <field name="key">action</field>
+            <field name="model">account.asset.asset</field>
+        </record> -->
+    </data>
+</odoo>
